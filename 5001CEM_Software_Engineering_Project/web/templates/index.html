@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="https://kit.fontawesome.com/629ae5694a.js" crossorigin="anonymous"></script>
+		<link rel="stylesheet" href="{{url_for('static',filename='css/theme.css')}}">
+	</head>
+	<body>
+		<div class="jumbotron">
+			<h1 class="display-2">BookShop</h1>
+		</div>
+		<nav>
+			<ul class="nav nav-fill">
+				<li class="nav-item">
+					<a class="nav-link" href="#">Home</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">About</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">Books</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">Contact us</a>
+				</li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-toggle="modal" data-target="#basket"><span class="fas fa-shopping-basket" style="font-size:20px"></span> Basket</a>
+                </li>
+			</ul>
+		</nav>
+        <br>
+        <!--Basket contents-->
+        <div id="basket" class="modal fade bd-example-modal-xl">
+            <!--Modal box-->
+            <div class="modal-dialog modal-xl" role="document">
+                <!--Inner modal content-->
+                <div class="modal-content">
+                    <!--Header contents in modal-->
+                    <div class="modal-header">
+                        <h3 class="modal-title">Shopping cart</h3>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <!--Modal content-->
+                    <div class="modal-body">
+                        {% if 'cart_item' in session %}
+                                {% for key, val in session['cart_item'].items() %}
+                                {% set quantity = session['cart_item'][key]['quantity'] %}
+                                {% set price = session['cart_item'][key]['price'] %}
+                                {% set item_price = session['cart_item'][key]['total_price']%}
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-3 offset-2">
+                                            isbn-13
+                                        </div>
+                                        <div class="col-*-*" >
+                                            {{ session['cart_item'][key]['ISBN13']}}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3 offset-2">
+                                           Book title
+                                        </div>  
+                                        <div class="col-*-*">
+                                           {{ session['cart_item'][key]['book_description'] }} 
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3 offset-2">
+                                            Author
+                                        </div>
+                                        <div class="col-*-*">
+                                            {{ session['cart_item'][key]['Author'] }}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3 offset-2">
+                                            Genre
+                                        </div>
+                                        <div class="col-*-*">
+                                            empty
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3 offset-2">
+                                            Price
+                                        </div>
+                                        <div class="col-2">
+                                            {{ session['cart_item'][key]['price'] }}
+                                        </div>
+                                        <div class="col-*-*">
+                                            <a href="{{url_for('.delete_product', code=session['cart_item'][key]['isbn']) }}" class="btn btn-danger">
+                                                &times;
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-2">
+                                            Total quantity:
+                                        </div>
+                                        <div class="col-*-*">
+                                            {{session['total_quantity']}}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-2">
+                                            Total cost:
+                                        </div>
+                                        <div class="col-*-*">
+                                            {{session['total_cost']}}
+                                        </div>
+                                    </div>
+                                </div>
+                        {% else: %}
+                            <div class="row justify-content-md-center">
+                                <div class="col-12">
+                                    Your cart is empty
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <!--Footer contents in modal-->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success">Check out</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+		<div class="row">
+			<div id="SearchFilter" class="col-2">
+				<form action="">
+					<p class="searchHeading">Genre</p>
+					<div class="form-check">
+						<input type="checkbox" class="form-check-input" id="Action">
+						<label class="form-check-label" for="Action">Action</label>
+						<br>
+						<input type="checkbox" class="form-check-input" id="Adventure">
+						<label class="form-check-label" for="Adventure">Adventure</label>
+						<br>
+						<input type="checkbox" class="form-check-input" id="Biography">
+						<label class="form-check-label" for="Biography">Biography</label>
+						<br>
+						<input type="checkbox" class="form-check-input" id="Comedy">
+						<label class="form-check-label" for="Comedy">Comedy</label>
+						<br>
+						<input type="checkbox" class="form-check-input" id="Fantasy">
+						<label class="form-check-label" for="Fantasy">Fantasy</label>
+						<br>
+						<input type="checkbox" class="form-check-input" id="Horror">
+						<label class="form-check-label" for="Horror">Horror</label>
+						<br>
+						<input type="checkbox" class="form-check-input" id="Mystery">
+						<label class="form-check-label" for="Mystery">Mystery</label>
+						<br>
+						<input type="checkbox" class="form-check-input" id="Drama">
+						<label class="form-check-label" for="Drama">Drama</label>
+						<br>
+						<input type="checkbox" class="form-check-input" id="Science Fiction">
+						<label class="form-check-label" for="Science Fiction">Science Fiction</label>
+						<br>
+						<input type="checkbox" class="form-check-input" id="Science Fantasy">
+						<label class="form-check-label" for="Science Fantasy">Science Fantasy</label>
+					</div>
+					<p class="searchHeading">Book type</p>
+					<div class="form-check">
+						<input type="checkbox" class="form-check-input" id="Hardback">
+						<label class="form-check-label" for="Hardback">Hardback</label>
+						<br>
+						<input type="checkbox" class="form-check-input" id="Softback">
+						<label class="form-check-label" for="Softback">Softback</label>
+						<br>
+						<input type="checkbox" class="form-check-input" id="Spiral-bound">
+						<label class="form-check-label" for="Spiral-bound">Spiral-bound</label>
+					</div>
+					<p class="searchHeading">Author</p>
+					<div class="form-check">
+						<input type="checkbox" class="form-check-input" id="Anthony Horowitz">
+						<label class="form-check-label" for="Anthony Horowitz">Anthony Horowitz</label>
+						<br>
+						<input type="checkbox" class="form-check-input" id="Clive Cussler">
+						<label class="form-check-label" for="Clive Cussler">Clive Cussler</label>
+						<br>
+						<input type="checkbox" class="form-check-input" id="David Baldacci">
+						<label class="form-check-label" for="David Baldacci">David Baldacci</label>
+						<br>
+						<input type="checkbox" class="form-check-input" id="Henry James">
+						<label class="form-check-label" for="Henry James">Henry James</label>
+						<br>
+						<input type="checkbox" class="form-check-input" id="J K Rowling">
+						<label class="form-check-label" for="J K Rowling">J K Rowling</label>
+						<br>
+						<input type="checkbox" class="form-check-input" id="Jane Austen">
+						<label class="form-check-label" for="Jane Austen">Jane Austen</label>
+						<br>
+						<input type="checkbox" class="form-check-input" id="Oscar Wilde">
+						<label class="form-check-label" for="Oscar Wilde">Oscar Wilde</label>
+					</div>
+					<p class="searchHeading">Price</p>
+					<div class="form-check">
+						<input type="checkbox" class="form-check-input" id="LessThan10">
+						<label class="form-check-label" for="LessThan10">Less than £10</label>
+						<br>
+						<input type="checkbox" class="form-check-input" id="10and20">
+						<label class="form-check-label" for="10and20">Between £10 and £20</label>
+						<br>
+						<input type="checkbox" class="form-check-input" id="20and30">
+						<label class="form-check-label" for="20and30">Between £20 and £30</label>
+						<br>
+						<input type="checkbox" class="form-check-input" id="30and40">
+						<label class="form-check-label" for="30and40">Between £30 and £40</label>
+						<br>
+						<input type="checkbox" class="form-check-input" id="40and50">
+						<label class="form-check-label" for="40and50">Between £40 and £50</label>
+						<br>
+						<input type="checkbox" class="form-check-input" id="GreaterThan50">
+						<label class="form-check-label" for="GreaterThan50">Greater than £50</label>
+					</div>
+					<br>
+					<button type="button" class="btn btn-primary">Search</button>
+				</form>
+			</div>
+			<div id="BookCatalog" class="col-10">
+				<div class="row">
+					<div class="col-12">
+						<div class="jumbotron">
+							<div id="bookOffers" class="carousel slide" data-ride="carousel">
+								<ol class="carousel-indicators">
+									<li data-target="#bookOffers" data-slide-to="0" class="active"></li>
+									<li data-target="#bookOffers" data-slide-to="1"></li>
+									<li data-target="#bookOffers" data-slide-to="2"></li>
+								</ol>
+								<div class="carousel-inner">
+									<div class="carousel-item active">
+										<img class="d-block w-50" src="{{url_for('static',filename='images/template.png')}}" style="width:25%;height:25%;" alt="Book example 1">
+										<div class="carousel-caption d-none d-md-block">
+											<h5>Book example 1</h5>
+											<p>please insert text here</p>
+										</div>
+									</div>
+									<div class="carousel-item">
+										<img class="d-block w-50" src="{{url_for('static',filename='images/template.png')}}" style="width:25%;height:25%;" alt="Book example 1">
+										<div class="carousel-caption d-none d-md-block">
+											<h5>Book example 2</h5>
+											<p>please insert text here</p>
+										</div>
+									</div>
+									<div class="carousel-item">
+										<img class="d-block w-50" src="{{url_for('static',filename='images/template.png')}}" style="width:25%;height:25%;" alt="Book example 1">
+										<div class="carousel-caption d-none d-md-block">
+											<h5>Book example 3</h5>
+											<p>please insert text here</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div id="productItems" class="col-12">
+                        <!--Row beginning of books-->
+                        <div class="row">
+                            <!--Columns of books-->
+							<div class="col-3">
+                                <form method="POST" action="/add">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <img class="centerIMG" src="{{url_for('static',filename='images/template.png')}}" alt="failed to load">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-*-*">
+                                            <p>{{ products[0][1] }}</p>
+                                        </div>
+                                        <div class="col-*-*">
+                                            <p>{{ products[0][3] }}</p>
+                                        </div>
+                                        <div class="col-*-*">
+                                            <input type="hidden" id="quantity" name="quantity" value="1"/>
+                                            <input type="hidden" id="isbn" name="isbn" value="{{products[0][0]}}"/>  
+                                            <input type="submit" value="Add to cart"/>
+                                        </div>
+                                    </div>
+                                </form>
+							</div>
+                            <div class="col-3">
+                                <form method="POST" action="/add">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <img class="centerIMG" src="{{url_for('static',filename='images/template.png')}}" alt="failed to load">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-*-*">
+                                            <p>{{ products[1][1] }}</p>
+                                        </div>
+                                        <div class="col-*-*">
+                                            <p>{{ products[1][3] }}</p>
+                                        </div>
+                                        <div class="col-*-*">
+                                            <input type="hidden" id="quantity" name="quantity" value="1"/>
+                                            <input type="hidden" id="isbn" name="isbn" value="{{products[1][0]}}"/>
+                                            <input type="submit" value="Add to cart"/>
+                                        </div>
+                                    </div>
+                                </form>
+							</div>
+                            <div class="col-3">
+                               <form method="POST" action="/add">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <img class="centerIMG" src="{{url_for('static',filename='images/template.png')}}" alt="failed to load">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-*-*">
+                                            <p>{{ products[2][1] }}</p>
+                                        </div>
+                                        <div class="col-*-*">
+                                            <p>{{ products[2][3] }}</p>
+                                        </div>
+                                        <div class="col-*-*">
+                                            <input type="hidden" id="quantity" name="quantity" value="1"/>
+                                            <input type="hidden" id="isbn" name="isbn" value="{{products[2][0]}}"/>
+                                            <input type="submit" value="Add to cart"/>
+                                        </div>
+                                    </div>
+                                </form>
+							</div>
+                            <div class="col-3">
+                                <form method="POST" action="/add">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <img class="centerIMG" src="{{url_for('static',filename='images/template.png')}}" alt="failed to load">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-*-*">
+                                            <p>{{ products[3][1] }}</p>
+                                        </div>
+                                        <div class="col-*-*">
+                                            <p>{{ products[3][3] }}</p>
+                                        </div>
+                                        <div class="col-*-*">
+                                            <input type="hidden" id="quantity" name="quantity" value="1"/>
+                                            <input type="hidden" id="isbn" name="isbn" value="{{products[3][0]}}"/>
+                                            <input type="submit" value="Add to cart"/>
+                                        </div>
+                                    </div>
+                                </form>
+							</div>
+                            <!--End of column of books-->
+					    </div>
+                        <!--Row end of books-->
+                        <!--Row beginning of books-->
+                        <div class="row">
+                            <!--Columns of books-->
+							<div class="col-3">
+                                <form method="POST" action="/add">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <img class="centerIMG" src="{{url_for('static',filename='images/template.png')}}" alt="failed to load">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-*-*">
+                                            <p>{{ products[4][1] }}</p>
+                                        </div>
+                                        <div class="col-*-*">
+                                            <p>{{ products[4][3] }}</p>
+                                        </div>
+                                        <div class="col-*-*">
+                                            <input type="hidden" id="quantity" name="quantity" value="1"/>
+                                            <input type="hidden" id="isbn" name="isbn" value="{{products[4][0]}}"/>
+                                            <input type="submit" value="Add to cart"/>
+                                        </div>
+                                    </div>
+                                </form>
+							</div>
+                            <div class="col-3">
+                                <form method="POST" action="/add">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <img class="centerIMG" src="{{url_for('static',filename='images/template.png')}}" alt="failed to load">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-*-*">
+                                            <p>{{ products[5][1] }}</p>
+                                        </div>
+                                        <div class="col-*-*">
+                                            <p>{{ products[5][3] }}</p>
+                                        </div>
+                                        <div class="col-*-*">
+                                            <input type="hidden" id="quantity" name="quantity" value="1"/>
+                                            <input type="hidden" id="isbn" name="isbn" value="{{ products[5][0] }}"/>
+                                            <input type="submit" value="Add to cart"/>
+                                        </div>
+                                    </div>
+                                </form>
+							</div>
+                            <div class="col-3">
+                                <form method="POST" action="/add">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <img class="centerIMG" src="{{url_for('static',filename='images/template.png')}}" alt="failed to load">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-*-*">
+                                            <p>{{ products[6][1] }}</p>
+                                        </div>
+                                        <div class="col-*-*">
+                                            <p>{{ products[6][3] }}</p>
+                                        </div>
+                                        <div class="col-*-*">
+                                            <input type="hidden" id="quantity" name="quantity" value="1"/>
+                                            <input type="hidden" id="isbn" name="isbn" value="{{products[6][0]}}"/>
+                                            <input type="submit" value="Add to cart"/>
+                                        </div>
+                                    </div>
+                                </form>
+							</div>
+                            <div class="col-3">
+                                <form method="post" action="/add">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <img class="centerIMG" src="{{url_for('static',filename='images/template.png')}}" alt="failed to load">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-*-*">
+                                            <p>{{ products[6][1] }}</p>
+                                        </div>
+                                        <div class="col-*-*">
+                                            <p>{{ products[6][3] }}</p>
+                                        </div>
+                                        <div class="col-*-*">
+                                            <input type="hidden" id="quantity" name="quantity" value="1"/>
+                                            <input type="hidden" id="isbn" name="isbn" value="{{products[6][0]}}"/>
+                                            <input type="submit" value="Add to cart"/>
+                                        </div>
+                                    </div>
+                                </form>
+							</div>
+                            <!--End of column of books-->
+					    </div>
+                        <!--Row end of books-->
+				    </div>
+                </div>
+			</div>
+		</div>
+   </body>
+</html>

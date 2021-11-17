@@ -1,0 +1,8 @@
+insert into products values 
+('9780330520331','David Baldacci','2013-08-01','The forgotten','/',7.99,7.99,1),
+('9780425248089','Clive Cussler','2021-05-29','The kingdom','/',10.63,10.63,1),
+('9781408845644','J.K Rowling','2015-08-06','Harry Potter and the philosophers stone','/',20.99,20.99,1),
+('9781853260001','Jane Austen','1992-05-05','Pride and Prejudice','/',2.25,2.25,1),
+('9798492962876','Henry James','2021-10-09','Turn of the Screw','/',6.60,6.60,1),
+('9781853260155','Oscar Wilde','1992-05-05','The picture of Dorian Gray','/',2.25,2.25,1),
+('9780330517782','David Baldacci','2010-07-02','Split Second','/',2.99,2.99,1);

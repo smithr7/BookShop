@@ -1,0 +1,9 @@
+create table products (
+     ISBN13 VARCHAR(13) PRIMARY KEY,
+     author_name VARCHAR(20) NOT NULL,
+     publication_date TEXT NOT NULL,
+     book_description TEXT NULL,
+     front_cover_picture VARCHAR(100) NULL,
+     trade_price REAL NOT NULL,
+     retail_price REAL NOT NULL,
+     book_quantity INT NULL);

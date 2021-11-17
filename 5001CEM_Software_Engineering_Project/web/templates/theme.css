@@ -1,0 +1,86 @@
+/*home styles*/
+a {
+	text-decoration:none;
+	color:#000000;
+	
+}
+a:hover {
+	color:#ffffff;
+	background-color:#000000;
+	transition: color 1s, background-color 1s;
+}
+.jumbotron {
+	height:100%;
+	max-height:100%
+}
+.carousel-item img {
+	display:block;
+	margin: auto;
+}
+#SearchFilter {
+	padding-top:10px;
+	padding-left:25px;
+}
+#SearchFilter .form-check {
+	padding-left:50px;
+}
+.searchHeading {
+	font-family:arial;
+	font-size:14pt;
+	margin: 0;
+}
+#SearchFilter form {
+	border-radius:0px 25px 25px 0px;
+	border-style: solid;
+	border-width: 1px 1px 1px 0px;
+	padding:10px;
+}
+#BookCatalog .row .col-3 {
+	/*border-style: solid;
+	border-width: 0.5px;*/
+	height:25vh;
+	padding:25px;
+}
+#productItems {
+	overflow-y:scroll;
+	overflow-x:hidden;
+	height:50vh;
+	display:block;
+	margin:auto;
+}
+.centerIMG {
+	display:block;
+	margin-left:auto;
+	margin-right:auto;
+}
+::-webkit-scrollbar {
+	width:10px;
+	border-radius:25px;
+}	
+::-webkit-scrollback-track { 
+	background-color:#c2c2c2;
+	border-radius:25px;
+}
+::-webkit-scrollbar-thumb {
+	background:#f2f2f2;
+	border-radius:25px;
+}
+::-webkit-scrollbar-thumb:hover {
+	background-color:#555;
+	border-radius:25px;
+	transition: background-color 1s;
+}
+/*Login styles*/
+a {
+	font-size:10pt;
+	line-height:0%;
+}
+.container-fluid {
+	padding-top:10%;
+	height:100vh;
+	background-image: url("../images/book-g161ef0ffc_1920.jpg");
+}
+.card {
+	padding:5%;
+	border-radius:25px;
+}
