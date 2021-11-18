@@ -237,9 +237,13 @@
 			<div id="BookCatalog" class="col-10">
 				<div class="row">
 					<div id="productItems" class="col-12">
-                        {% for product in products %}
-                        
-                        {% endfor %}
+                        <div class="row">
+                            {% for product in range(0, 5) if product %}
+                                 <div class="col-3">
+                                     <p>{{products[product][0]}} the book</p>
+                                 </div>
+                            {% endfor %}
+                        </div>
 				    </div>
                 </div>
 			</div>

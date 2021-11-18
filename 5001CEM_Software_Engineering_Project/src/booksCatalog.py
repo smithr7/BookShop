@@ -3,7 +3,7 @@ from flask import Flask, session, url_for, render_template, request, redirect, a
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
 from re import *
-import sys,os
+import sys, os, math
 
 app = Flask(__name__, template_folder='../web/templates/')
 
@@ -83,7 +83,12 @@ def loadBookProducts():
     cur = con.cursor();
     cur.execute("SELECT * FROM products")
     rows = cur.fetchall()
-    return render_template('bookCatalog.html',products=rows)
+    productRows = len(rows) / 4
+    if (len(rows) % 4) == 0:
+        return render_template('bookCatalog.html',products=rows,gridRows=productRows)
+    else:
+        productRows = math.floor(productRows)
+        return render_template('bookCatalog.html',products=rows,gridRows=productRows)
 
 @app.route('/empty')
 def empty_cart():
