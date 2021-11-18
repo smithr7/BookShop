@@ -10,3 +10,7 @@ import sqlite3
 import os
 import re
 
+@app.route('/books')
+def loadBookProducts():
+    
+
