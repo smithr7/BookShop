@@ -239,16 +239,17 @@
 					<div id="productItems" class="col-12">
                         {% set rowRangeLower = 0 %}
                         {% set rowRangeUpper = 5 %}
+                        
                         {% for counter in range(0, gridRows) %}
+                            {{ rowRangeLower }}
+                            {{ rowRangeUpper }}
                             <div class="row">
                                 {% for product in range(rowRangeLower, rowRangeUpper) if product %}
                                      <div class="col-3">
-                                         <p>{{products[product][0]}} the book</p>
+                                         <p>{{products[product][1]}} the book</p>
                                      </div>
                                 {% endfor %}
                             </div>
-                            {% set rowRangeLower = rowRangeLower + 5 %}
-                            {% set rowRangeUpper = rowRangeUpper + 5 %}
                         {% endfor %}
 				    </div>
                 </div>
