@@ -87,7 +87,7 @@ def loadBookProducts():
     if (len(rows) % 4) == 0:
         return render_template('bookCatalog.html',products=rows,gridRows=productRows)
     else:
-        productRows = math.floor(productRows)
+        productRows = round(productRows)
         return render_template('bookCatalog.html',products=rows,gridRows=productRows)
 
 @app.route('/empty')
