@@ -44,6 +44,7 @@
                     </div>
                     <!--Modal content-->
                     <div class="modal-body">
+                        <!--All books added within current session loaded into basket-->
                         {% if 'cart_item' in session %}
                                 {% for key, val in session['cart_item'].items() %}
                                 {% set quantity = session['cart_item'][key]['quantity'] %}
@@ -90,13 +91,16 @@
                                             {{ session['cart_item'][key]['price'] }}
                                         </div>
                                         <div class="col-*-*">
-                                            <a href="{{url_for('.delete_product', code=session['cart_item'][key]['isbn']) }}" class="btn btn-danger">
+                                            <!--Delete action for products located in basket-->
+                                            <!--Generated incrementally for each product add-->
+                                            <a href="{{ url_for('.delete_product', code=session['cart_item'][key]['ISBN13']) }}" class="btnRemoveAction">
                                                 &times;
                                             </a>
                                         </div>
                                     </div>
                                 </div>
                                 {% endfor %}
+                                <!--Final totals in quantity and price-->
                                 <div class="container">
                                     <div class="row">
                                         <div class="col-2">
@@ -116,6 +120,7 @@
                                     </div>
                                 </div>
                         {% else: %}
+                            <!--Condition whereupon the basket is empty-->
                             <div class="row justify-content-md-center">
                                 <div class="col-12">
                                     Your cart is empty
@@ -125,16 +130,19 @@
                     </div>
                     <!--Footer contents in modal-->
                     <div class="modal-footer">
+                        <!--Action going forwards with app-->
                         <button type="button" class="btn btn-success">Check out</button>
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
         </div>
+        <!--Search function for books: deprecated on home page
 		<div class="row">
 			<div id="SearchFilter" class="col-2">
 				<form action="">
 					<p class="searchHeading">Genre</p>
+                    <!--Start of form conditions
 					<div class="form-check">
 						<input type="checkbox" class="form-check-input" id="Action">
 						<label class="form-check-label" for="Action">Action</label>
@@ -224,10 +232,13 @@
 					<button type="button" class="btn btn-primary">Search</button>
 				</form>
 			</div>
+            -->
+            <!--Book highlights carousel-->
 			<div id="BookCatalog" class="col-10">
 				<div class="row">
 					<div class="col-12">
 						<div class="jumbotron">
+                            <!--Carousel main information-->
 							<div id="bookOffers" class="carousel slide" data-ride="carousel">
 								<ol class="carousel-indicators">
 									<li data-target="#bookOffers" data-slide-to="0" class="active"></li>
