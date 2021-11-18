@@ -1,16 +1,18 @@
-from flask import Flask
 from markupsafe import escape
-from flask import url_for
-from flask import render_template
-from flask import request
-from flask import redirect
-from flask import abort
-from flask import make_response
+from flask import Flask, session, url_for, render_template, request, redirect, abort, make_response
+from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
-import os
-import re
+from re import *
+import sys,os
+
+app = Flask(__name__, template_folder='../web/templates/')
 
 @app.route('/books')
 def loadBookProducts():
-    
+    path = './Database/bookProducts.db'
+    con = sqlite3.connect(path)
+    cur = con.cursor();
+    cur.execute("SELECT * FROM products")
+    rows = cur.fetchall()
+    return render_template('bookCatalog.html',products=rows)
 
