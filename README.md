@@ -15,5 +15,10 @@ export FLASK_APP=BookShop
 flask run (--host=0.0.0.0)
 
 ```
-Proceed to use the local machine or server box info to load the login page
+Proceed to use the local machine url or server box info to load the login page. Please see information on accessing this below:
 
+```
+Local machine url: http://127.0.0.1/
+Codio server box: https://metal-bagel-80.codio-box.uk
+
+```
