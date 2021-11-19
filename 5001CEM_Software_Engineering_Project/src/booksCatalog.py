@@ -6,6 +6,7 @@ from re import *
 import sys, os, math
 
 app = Flask(__name__, template_folder='../web/templates/')
+app.secret_key = "625273"
 
 @app.route('/add', methods=['POST'])
 def product_addition_to_cart():
@@ -63,7 +64,7 @@ def product_addition_to_cart():
             session['overall_total_price'] = overall_total_price
             
             #Redirection to home screen once completed
-            return redirect(url_for('.loadHomeScreen'))
+            return redirect(url_for('.loadBookProducts'))
         else:
             return 'Error while adding item to cart'
     except Exception as e:
@@ -135,7 +136,47 @@ def delete_product(code):
             exc_type, exc_obj, exc_tb = sys.exc_info()
             fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
             print(exc_type, fname, exc_tb.tb_lineno)
-    
+
+@app.route('/search', methods=['POST','GET'])
+def searchItems():
+    try:
+        #Search function request method issued
+        if request.method == 'POST':
+            
+            databaseStringSearch = []
+            for counter in request.form:
+                databaseStringSearch.append(counter)
+            
+            databaseStringSearch.pop(len(databaseStringSearch) - 1)
+            con = sqlite3.connect('./Database/bookProducts.db')
+            cur = con.cursor();
+            
+            row = []
+            
+            counter = 0
+            for selection in databaseStringSearch:
+                cur.execute("SELECT * FROM products WHERE author_name = ?", [selection])
+                row.append(cur.fetchone())
+                counter = counter + 1
+            
+            
+            
+        else:
+            return redirect(url_for('.loadBookProducts')) 
+
+        
+    except Exception as e:
+        # Exception handler pinpointing location of error raised
+        # Extract source: https://www.codegrepper.com/code-examples/python/python+get+line+number+of+error
+        # Website url: https://www.codegrepper.com/
+        # Author: Confused Cottonmouth
+        # Access date: 11/2021
+        exc_type, exc_obj, exc_tb = sys.exc_info()
+        fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+        print(exc_type, fname, exc_tb.tb_lineno)
+    finally:
+        return redirect(url_for('.loadBookProducts'))
+
 def array_merge( first_array , second_array ):
 	if isinstance( first_array , list ) and isinstance( second_array , list ):
 		return first_array + second_array

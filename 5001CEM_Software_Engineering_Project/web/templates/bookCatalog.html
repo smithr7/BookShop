@@ -141,96 +141,96 @@
         <!--Search function of book catalog-->
 		<div class="row">
 			<div id="SearchFilter" class="col-2">
-				<form action="">
+				<form action="/search" method="POST">
 					<p class="searchHeading">Genre</p>
                     <!--Start of form conditions-->
 					<div class="form-check">
-						<input type="checkbox" class="form-check-input" id="Action">
+						<input type="checkbox" class="form-check-input" id="Action" name="Action">
 						<label class="form-check-label" for="Action">Action</label>
 						<br>
-						<input type="checkbox" class="form-check-input" id="Adventure">
+						<input type="checkbox" class="form-check-input" id="Adventure" name="Adventure">
 						<label class="form-check-label" for="Adventure">Adventure</label>
 						<br>
-						<input type="checkbox" class="form-check-input" id="Biography">
+						<input type="checkbox" class="form-check-input" id="Biography" name="Biography">
 						<label class="form-check-label" for="Biography">Biography</label>
 						<br>
-						<input type="checkbox" class="form-check-input" id="Comedy">
+						<input type="checkbox" class="form-check-input" id="Comedy" name="Comedy">
 						<label class="form-check-label" for="Comedy">Comedy</label>
 						<br>
-						<input type="checkbox" class="form-check-input" id="Fantasy">
+						<input type="checkbox" class="form-check-input" id="Fantasy" name="Fantasy">
 						<label class="form-check-label" for="Fantasy">Fantasy</label>
 						<br>
-						<input type="checkbox" class="form-check-input" id="Horror">
+						<input type="checkbox" class="form-check-input" id="Horror" name="Horror">
 						<label class="form-check-label" for="Horror">Horror</label>
 						<br>
-						<input type="checkbox" class="form-check-input" id="Mystery">
+						<input type="checkbox" class="form-check-input" id="Mystery" name="Mystery">
 						<label class="form-check-label" for="Mystery">Mystery</label>
 						<br>
-						<input type="checkbox" class="form-check-input" id="Drama">
+						<input type="checkbox" class="form-check-input" id="Drama" name="Drama">
 						<label class="form-check-label" for="Drama">Drama</label>
 						<br>
-						<input type="checkbox" class="form-check-input" id="Science Fiction">
+						<input type="checkbox" class="form-check-input" id="Science_Fiction" name="Science_Fiction">
 						<label class="form-check-label" for="Science Fiction">Science Fiction</label>
 						<br>
-						<input type="checkbox" class="form-check-input" id="Science Fantasy">
+						<input type="checkbox" class="form-check-input" id="Science_Fantasy" name="Science_Fantasy">
 						<label class="form-check-label" for="Science Fantasy">Science Fantasy</label>
 					</div>
 					<p class="searchHeading">Book type</p>
 					<div class="form-check">
-						<input type="checkbox" class="form-check-input" id="Hardback">
+						<input type="checkbox" class="form-check-input" id="Hardback" name="Hardback">
 						<label class="form-check-label" for="Hardback">Hardback</label>
 						<br>
-						<input type="checkbox" class="form-check-input" id="Softback">
+						<input type="checkbox" class="form-check-input" id="Softback" name="Hardback">
 						<label class="form-check-label" for="Softback">Softback</label>
 						<br>
-						<input type="checkbox" class="form-check-input" id="Spiral-bound">
+						<input type="checkbox" class="form-check-input" id="Spiral-bound" name="Spiral-bound">
 						<label class="form-check-label" for="Spiral-bound">Spiral-bound</label>
 					</div>
 					<p class="searchHeading">Author</p>
 					<div class="form-check">
-						<input type="checkbox" class="form-check-input" id="Anthony Horowitz">
+						<input type="checkbox" class="form-check-input" id="Anthony_Horowitz" name="Anthony_Horowitz">
 						<label class="form-check-label" for="Anthony Horowitz">Anthony Horowitz</label>
 						<br>
-						<input type="checkbox" class="form-check-input" id="Clive Cussler">
+						<input type="checkbox" class="form-check-input" id="Clive_Cussler" name="Clive_Cussler">
 						<label class="form-check-label" for="Clive Cussler">Clive Cussler</label>
 						<br>
-						<input type="checkbox" class="form-check-input" id="David Baldacci">
+						<input type="checkbox" class="form-check-input" id="David_Baldacci" name="David_Baldacci">
 						<label class="form-check-label" for="David Baldacci">David Baldacci</label>
 						<br>
-						<input type="checkbox" class="form-check-input" id="Henry James">
+						<input type="checkbox" class="form-check-input" id="Henry_James" name="Henry_James">
 						<label class="form-check-label" for="Henry James">Henry James</label>
 						<br>
-						<input type="checkbox" class="form-check-input" id="J K Rowling">
+						<input type="checkbox" class="form-check-input" id="J_K_Rowling" name="J_K_Rowling">
 						<label class="form-check-label" for="J K Rowling">J K Rowling</label>
 						<br>
-						<input type="checkbox" class="form-check-input" id="Jane Austen">
+						<input type="checkbox" class="form-check-input" id="Jane_Austen" name="Jane_Austen">
 						<label class="form-check-label" for="Jane Austen">Jane Austen</label>
 						<br>
-						<input type="checkbox" class="form-check-input" id="Oscar Wilde">
+						<input type="checkbox" class="form-check-input" id="Oscar_Wilde" name="Oscar_Wilde">
 						<label class="form-check-label" for="Oscar Wilde">Oscar Wilde</label>
 					</div>
 					<p class="searchHeading">Price</p>
 					<div class="form-check">
-						<input type="checkbox" class="form-check-input" id="LessThan10">
+						<input type="checkbox" class="form-check-input" id="LessThan10" name="LessThan10">
 						<label class="form-check-label" for="LessThan10">Less than £10</label>
 						<br>
-						<input type="checkbox" class="form-check-input" id="10and20">
+						<input type="checkbox" class="form-check-input" id="10and20" name="10and20">
 						<label class="form-check-label" for="10and20">Between £10 and £20</label>
 						<br>
-						<input type="checkbox" class="form-check-input" id="20and30">
+						<input type="checkbox" class="form-check-input" id="20and30" name="20and30">
 						<label class="form-check-label" for="20and30">Between £20 and £30</label>
 						<br>
-						<input type="checkbox" class="form-check-input" id="30and40">
+						<input type="checkbox" class="form-check-input" id="30and40" name="30and40">
 						<label class="form-check-label" for="30and40">Between £30 and £40</label>
 						<br>
-						<input type="checkbox" class="form-check-input" id="40and50">
+						<input type="checkbox" class="form-check-input" id="40and50" name="40and50">
 						<label class="form-check-label" for="40and50">Between £40 and £50</label>
 						<br>
-						<input type="checkbox" class="form-check-input" id="GreaterThan50">
+						<input type="checkbox" class="form-check-input" id="GreaterThan50" name="GreaterThan50">
 						<label class="form-check-label" for="GreaterThan50">Greater than £50</label>
 					</div>
 					<br>
-					<button type="button" class="btn btn-primary">Search</button>
+					<button type="submit" name="submit" id="submit" class="btn btn-primary">Search</button>
 				</form>
 			</div>
             <!--Book highlights carousel-->
@@ -241,8 +241,6 @@
                         {% set rowRangeUpper = 5 %}
                         
                         {% for counter in range(0, gridRows) %}
-                            {{ rowRangeLower }}
-                            {{ rowRangeUpper }}
                             <div class="row">
                                 {% for product in range(rowRangeLower, rowRangeUpper) if product %}
                                      <div class="col-3">
