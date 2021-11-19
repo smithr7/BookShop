@@ -104,19 +104,19 @@
                                 <!--Final totals in quantity and price-->
                                 <div class="container">
                                     <div class="row">
-                                        <div class="col-2">
+                                        <div class="col-2 offset-2">
                                             Total quantity:
                                         </div>
                                         <div class="col-*-*">
-                                            {{session['total_quantity']}}
+                                            {{session['overall_total_quantity']}}
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-2">
+                                        <div class="col-2 offset-2">
                                             Total cost:
                                         </div>
                                         <div class="col-*-*">
-                                            {{session['total_cost']}}
+                                            &#8356;{{session['overall_total_price']}}
                                         </div>
                                     </div>
                                 </div>
@@ -239,10 +239,31 @@
 					<div id="productItems" class="col-12">
                     <!--Listing of each book item in database-->
                     {% for book in products %}
-                        <div id="bookItem" class="col-3" style="border: solid 1pt;">
-                            
-                           
-                        </div>                        
+                        <form method="POST" action="/add">
+                            <div id="bookItem" class="col-3">
+                                <div class="row" style="height:50%;">
+                                    <div class="col-12">
+                                        <p>{{book[4]}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3">
+                                        <p>{{book[3]}}</p>
+                                    </div>
+                                    <div class="col-3">
+                                        <p>{{book[1]}}</p>
+                                    </div>
+                                    <div class="col-2">
+                                        <p>&#8356;{{book[5]}}</p>
+                                    </div>
+                                    <div class="col-3">
+                                        <input type="hidden" id="quantity" name="quantity" value="1"/>
+                                        <input type="hidden" id="isbn" name="isbn" value="{{book[0]}}"/>
+                                        <input type="submit" class="btn btn-light" value="Add to cart"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     {% endfor %}
 				    </div>
                 </div>

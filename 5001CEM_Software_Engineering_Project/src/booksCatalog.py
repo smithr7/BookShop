@@ -39,7 +39,7 @@ def product_addition_to_cart():
                 if row[0] in session['cart_item']:
                     for key, value in session['cart_item'].items():
                         if row[0] == key:
-                            session['cart_item'][key]['quantity'] = quantity
+                            #session['cart_item'][key]['quantity'] = quantity
                             previous_quantity = session['cart_item'][key]['quantity']
                             total_quantity = previous_quantity + quantity
                             session['cart_item'][key]['quantity'] = total_quantity
@@ -125,7 +125,7 @@ def delete_product(code):
 		else:
 			session['all_total_quantity'] = all_total_quantity
 			session['all_total_price'] = all_total_price
-		return redirect(url_for('.loadHomeScreen'))
+		return redirect(url_for('.loadBookProducts'))
 	except Exception as e:
             # Exception handler pinpointing location of error raised
             # Extract source: https://www.codegrepper.com/code-examples/python/python+get+line+number+of+error

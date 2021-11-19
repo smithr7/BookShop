@@ -57,6 +57,10 @@ p {
 	height:25vh;
 	padding:25px;
 }
+#BookCatalog .row .col-2 {
+    height:25vh;
+    padding:25px;
+}
 #productItems {
 	overflow-y:scroll;
 	overflow-x:hidden;
