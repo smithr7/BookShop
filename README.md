@@ -13,7 +13,6 @@ Please use the terminal bash in either codio or on the website to pull this repo
 ```
 export FLASK_APP=BookShop
 flask run (--host=0.0.0.0)
-
 ```
 Proceed to use the local machine url or server box info to load the login page. Please see information on accessing this below:
 
