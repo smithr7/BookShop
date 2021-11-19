@@ -2,7 +2,7 @@
 
 The BookShop Project is an online shop for buying books. It encompasses common favourite and newly released literature for reading. The website component itself is designed to allow users to shop around for whatever book they want. 
 
-# What is included in this github?
+## What is included in this github?
 
 The core components of this git-hub include the webpages, python FLASK script to action the website. Additional content include cascading style sheets and image content within the static file located under src. Please note the cascading style sheets is run under the FLASK script and not directly into the HTML as referenced. The images also are run through a reference within the database system.
 
