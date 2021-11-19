@@ -194,7 +194,7 @@
 						<input type="checkbox" class="form-check-input" id="Clive_Cussler" name="Clive_Cussler">
 						<label class="form-check-label" for="Clive Cussler">Clive Cussler</label>
 						<br>
-						<input type="checkbox" class="form-check-input" id="David_Baldacci" name="David_Baldacci">
+						<input type="checkbox" class="form-check-input" id="David Baldacci" name="David Baldacci">
 						<label class="form-check-label" for="David Baldacci">David Baldacci</label>
 						<br>
 						<input type="checkbox" class="form-check-input" id="Henry_James" name="Henry_James">
@@ -237,18 +237,13 @@
 			<div id="BookCatalog" class="col-10">
 				<div class="row">
 					<div id="productItems" class="col-12">
-                        {% set rowRangeLower = 0 %}
-                        {% set rowRangeUpper = 5 %}
-                        
-                        {% for counter in range(0, gridRows) %}
-                            <div class="row">
-                                {% for product in range(rowRangeLower, rowRangeUpper) if product %}
-                                     <div class="col-3">
-                                         <p>{{products[product][1]}} the book</p>
-                                     </div>
-                                {% endfor %}
-                            </div>
-                        {% endfor %}
+                    <!--Listing of each book item in database-->
+                    {% for book in products %}
+                        <div id="bookItem" class="col-3" style="border: solid 1pt;">
+                            
+                           
+                        </div>                        
+                    {% endfor %}
 				    </div>
                 </div>
 			</div>

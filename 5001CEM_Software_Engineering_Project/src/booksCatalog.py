@@ -1,7 +1,7 @@
 from markupsafe import escape
 from flask import Flask, session, url_for, render_template, request, redirect, abort, make_response
 from werkzeug.security import generate_password_hash, check_password_hash
-import sqlite3
+import sqlite3, numpy as np
 from re import *
 import sys, os, math
 
@@ -87,13 +87,12 @@ def loadBookProducts():
     con = sqlite3.connect(path)
     cur = con.cursor();
     cur.execute("SELECT * FROM products")
-    rows = cur.fetchall()
-    productRows = len(rows) / 4
-    if (len(rows) % 4) == 0:
-        return render_template('bookCatalog.html',products=rows,gridRows=productRows)
-    else:
-        productRows = round(productRows)
-        return render_template('bookCatalog.html',products=rows,gridRows=productRows)
+    rows = cur.fetchall()     
+    
+    productRows = round(len(rows) / 4)
+
+    return render_template('bookCatalog.html',products=rows)
+ 
 
 @app.route('/empty')
 def empty_cart():
@@ -146,19 +145,17 @@ def searchItems():
             databaseStringSearch = []
             for counter in request.form:
                 databaseStringSearch.append(counter)
+                print(counter)
             
             databaseStringSearch.pop(len(databaseStringSearch) - 1)
+            
+            print(databaseStringSearch[0])
+            
             con = sqlite3.connect('./Database/bookProducts.db')
             cur = con.cursor();
-            
-            row = []
-            
-            counter = 0
-            for selection in databaseStringSearch:
-                cur.execute("SELECT * FROM products WHERE author_name = ?", [selection])
-                row.append(cur.fetchone())
-            
-            
+            cur.execute("SELECT * FROM products WHERE author_name =?",[databaseStringSearch[0]])
+            row = cur.fetchall()
+            print("Data value from database: ",row)
             
         else:
             return redirect(url_for('.loadBookProducts')) 

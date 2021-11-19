@@ -108,3 +108,8 @@ a {
 	padding:5%;
 	border-radius:25px;
 }
+/*BookShop styles*/
+#bookItem {
+    position:relative;
+    float:left;
+}
