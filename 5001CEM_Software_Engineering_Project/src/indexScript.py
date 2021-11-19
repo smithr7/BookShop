@@ -70,7 +70,11 @@ def product_addition_to_cart():
         else:
             return 'Error while adding item to cart'
     except Exception as e:
-        #Exception handler pinpointing location of error raised
+        # Exception handler pinpointing location of error raised
+        # Extract source: https://www.codegrepper.com/code-examples/python/python+get+line+number+of+error
+        # Website url: https://www.codegrepper.com/
+        # Author: Confused Cottonmouth
+        # Access date: 11/2021
         exc_type, exc_obj, exc_tb = sys.exc_info()
         fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
         print(e,exc_type, fname, exc_tb.tb_lineno)
@@ -128,6 +132,11 @@ def delete_product(code):
 			session['all_total_price'] = all_total_price
 		return redirect(url_for('.loadHomeScreen'))
 	except Exception as e:
+            # Exception handler pinpointing location of error raised
+            # Extract source: https://www.codegrepper.com/code-examples/python/python+get+line+number+of+error
+            # Website url: https://www.codegrepper.com/
+            # Author: Confused Cottonmouth
+            # Access date: 11/2021
             exc_type, exc_obj, exc_tb = sys.exc_info()
             fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
             print(exc_type, fname, exc_tb.tb_lineno)
