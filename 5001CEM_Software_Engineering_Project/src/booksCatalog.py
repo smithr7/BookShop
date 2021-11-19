@@ -157,7 +157,6 @@ def searchItems():
             for selection in databaseStringSearch:
                 cur.execute("SELECT * FROM products WHERE author_name = ?", [selection])
                 row.append(cur.fetchone())
-                counter = counter + 1
             
             
             
