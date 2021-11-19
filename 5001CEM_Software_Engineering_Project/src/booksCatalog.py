@@ -83,16 +83,24 @@ def product_addition_to_cart():
 
 @app.route('/books')
 def loadBookProducts():
-    path = './Database/bookProducts.db'
-    con = sqlite3.connect(path)
-    cur = con.cursor();
-    cur.execute("SELECT * FROM products")
-    rows = cur.fetchall()     
-    
-    productRows = round(len(rows) / 4)
-
-    return render_template('bookCatalog.html',products=rows)
- 
+    try:
+        con = sqlite3.connect('./Database/bookProducts.db')
+        cur = con.cursor();
+        cur.execute("SELECT * FROM products")
+        rows = cur.fetchall()     
+        return render_template('bookCatalog.html',products=rows)
+    except Exception as e:
+        # Exception handler pinpointing location of error raised
+        # Extract source: https://www.codegrepper.com/code-examples/python/python+get+line+number+of+error
+        # Website url: https://www.codegrepper.com/
+        # Author: Confused Cottonmouth
+        # Access date: 11/2021
+        exc_type, exc_obj, exc_tb = sys.exc_info()
+        fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+        print(e,exc_type, fname, exc_tb.tb_lineno)
+    finally:
+        cur.close()
+        con.close()
 
 @app.route('/empty')
 def empty_cart():
