@@ -8,22 +8,22 @@ The core components of this git-hub include the webpages, python FLASK script to
 
 FLASK Components repository path:
 
-- 5001CEM_Software_Engineering/src/CalculateStockLevels.py
+- 5001CEM_Software_Engineering/src/CalculateStockLevels.py<br/>
 Administrative control for issuing re-stocking of books and changing of quantities. It also includes the ability to remove and add products
 
-- 5001CEM_Software_Engineering/src/CreditCardProcess.py
+- 5001CEM_Software_Engineering/src/CreditCardProcess.py<br/>
 User credit card payment system which captures the data and immediately deletes it upon receiving the data.
 
-- 5001CEM_Software_Engineering/src/LoginCredentials.py
+- 5001CEM_Software_Engineering/src/LoginCredentials.py<br/>
 The main web-page back-end functionality which operates to enable a login and redirects the user when the correct credentials are placed in. Functionality also includes basic security to stop bypassing into the system.
 
-- 5001CEM_Software_Engineering/src/bookInformation.py
+- 5001CEM_Software_Engineering/src/bookInformation.py<br/>
 Template for loading database information into it. All the information will be loaded into the associate fields, and inherited functionality with adding to the shopping cart session. Multiple quantities can be ordered on this webpage as well.
 
-- 5001CEM_Software_Engineering/src/booksCatalog.py
+- 5001CEM_Software_Engineering/src/booksCatalog.py<br/>
 Template with all books including search parameters for the user to select books under specific filters. Without any filters the entire database log from which any books added by the administrators have added.
 
-- 5001CEM_Software_Engineering/src/indexScript.py
+- 5001CEM_Software_Engineering/src/indexScript.py<br/>
 Main home page of the book shop website. All other operations/functionality are achievable through the main webpage. It also includes static webpages such as about us.
 
 Website Components repository path:
