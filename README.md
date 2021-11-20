@@ -52,6 +52,9 @@ Direction to from the login page if an account does not exist for the user. It c
 - 5001CEM_Software_Engineering/web/templates/StockManagement.html<br/>
 Administrative webpage for reviewing the stock and products currently listed within the system. Here the administrator can control the books added, and removed.
 
+- 5001CEM_Software_Engineering/src/static/css<br/>
+All cascading style sheets are stored here. Most operate as supplemnentary towards the linked bootstrap open source front-end framework.
+
 ## Executing script
 
 Please use the terminal bash in either codio or on the website to pull this repository. Upon pulling the repository, locate the 5001CEM_Software_Engineering/bin/ and execute the BookShop.py as shown for codio and bash terminal:
