@@ -30,8 +30,8 @@ Book Shop website layout operates by the following hierarchy:
 -  ▪ Home Page
 -    ▫ Books Page
 -      ○ Check out
--       ● Payment
--   ▪ About us
--   ▪ Contact us    
+-        ● Payment
+-  ▪ About us
+-  ▪ Contact us    
 ```
 Indentation in this situation demonstrates child elements of a parent element be them webpages or modals (functions of the webpages). 
