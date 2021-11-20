@@ -18,7 +18,7 @@ User credit card payment system which captures the data and immediately deletes 
 The main web-page back-end functionality which operates to enable a login and redirects the user when the correct credentials are placed in. Functionality also includes basic security to stop bypassing into the system.
 
 - 5001CEM_Software_Engineering/src/bookInformation.py<br/>
-Template for loading database information into it. All the information will be loaded into the associate fields, and inherited functionality with adding to the shopping cart session. Multiple quantities can be ordered on this webpage as well.
+The back-end functionality for loading associated data into the template bookCatalog.html which will be called whenever a user clicks on a particular book from any webpage
 
 - 5001CEM_Software_Engineering/src/booksCatalog.py<br/>
 Template with all books including search parameters for the user to select books under specific filters. Without any filters the entire database log from which any books added by the administrators have added.
@@ -28,6 +28,22 @@ Main home page of the book shop website. All other operations/functionality are 
 
 Website Components repository path:
 
+- 5001CEM_Software_Engineering/web/templates/bookCatalog.html<br/>
+Template for all books within the database including filters to enable a user to browse. Search functionality has not been added in yet as it has yet to be constructed on the back-end.
+- 5001CEM_Software_Engineering/web/templates/bookPreview.html<br/>
+Basic template structure for loading all database information into concerning a specific book chosen. It comprises of mainly data passed from the back-end to the front-end and structured.
+- 5001CEM_Software_Engineering/web/templates/CheckOut.html<br/>
+Enables the user to check-out the books that they have currently in their basket. It will serve to take payments as well and feedback information to the back-end to make the necessary changes to the stock.
+- 5001CEM_Software_Engineering/web/templates/CompleteOrder.html<br/>
+pending...
+- 5001CEM_Software_Engineering/web/templates/index.html<br/>
+Main home page from which the user is re-directed to after registering or logging in. Here it serves as the nexus with navigation to get access to other static and dynamic areas of the website.
+- 5001CEM_Software_Engineering/web/templates/LoginCredentials.html<br/>
+Re-direction page which is issued when entering the website. All access and entry is based between this and the register page. Please note that basic security responses have been added as per the FLASK back-end script.
+- 5001CEM_Software_Engineering/web/templates/Register.html<br/>
+Direction to from the login page if an account does not exist for the user. It collects all necessary information for logging in and some additional contact information so as to complete contact us form. Also serves to help will billing information and postage with books.
+- 5001CEM_Software_Engineering/web/templates/StockManagement.html<br/>
+Administrative webpage for reviewing the stock and products currently listed within the system. Here the administrator can control the books added, and removed.
 
 ## Executing script
 
