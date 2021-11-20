@@ -19,5 +19,19 @@ Proceed to use the local machine url or server box info to load the login page. 
 ```
 Local machine url: http://127.0.0.1/
 Codio server box: https://metal-bagel-80.codio-box.uk
+```
+
+## Website layout
+
+Book Shop website layout operates by the following hierarchy:
 
 ```
+- Login Page
+-   Home Page
+-     Books Page
+-       Check out
+-         Payment
+-     About us
+-     Contact us    
+```
+Indentation in this situation demonstrates child elements of a parent element be them webpages or modals (functions of the webpages). 
