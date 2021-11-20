@@ -6,7 +6,7 @@ The BookShop Project is an online shop for buying books. It encompasses common f
 
 The core components of this git-hub include the webpages, python FLASK script to action the website. Additional content include cascading style sheets and image content within the static file located under src. Please note the cascading style sheets is run under the FLASK script and not directly into the HTML as referenced. The images also are run through a reference within the database system.
 
-FLASK Components repository path:
+### FLASK Components repository path:
 
 - 5001CEM_Software_Engineering/src/CalculateStockLevels.py<br/>
 Administrative control for issuing re-stocking of books and changing of quantities. It also includes the ability to remove and add products
@@ -26,7 +26,7 @@ Template with all books including search parameters for the user to select books
 - 5001CEM_Software_Engineering/src/indexScript.py<br/>
 Main home page of the book shop website. All other operations/functionality are achievable through the main webpage. It also includes static webpages such as about us.
 
-Website Components repository path:
+### Website Components repository path:
 
 - 5001CEM_Software_Engineering/web/templates/bookCatalog.html<br/>
 Template for all books within the database including filters to enable a user to browse. Search functionality has not been added in yet as it has yet to be constructed on the back-end.
