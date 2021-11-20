@@ -47,8 +47,8 @@ Codio server box: https://metal-bagel-80.codio-box.uk
 ## Website layout
 
 Book Shop website is a interconnection of back-end and front-end components. The front-end webpages have been constructed with interconnections. Please find the front-end webpages and their connections in this tiered hierarchy:
-```
+
 ![image](https://user-images.githubusercontent.com/23194490/142739467-f415ef49-e5c6-4920-8169-7c5aea35c324.png)
 
-```
+
 Indentation in this situation demonstrates child elements of a parent element be them webpages or modals (functions of the webpages). Siblings have the same bullet point symbols so as to distinguish them across the structure. Note that the Login Page and Register have been listed as siblings. The registration page will inherit all tiered structure as the login page. They have been seperated to prevent duplicating the tree.
