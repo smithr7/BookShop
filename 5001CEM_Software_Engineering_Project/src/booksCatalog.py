@@ -82,13 +82,19 @@ def product_addition_to_cart():
         con.close()
 
 @app.route('/books')
-def loadBookProducts():
+def loadBookProducts(items = []):
     try:
+        print(items)
         con = sqlite3.connect('./Database/bookProducts.db')
         cur = con.cursor();
-        cur.execute("SELECT * FROM products")
-        rows = cur.fetchall()     
-        return render_template('bookCatalog.html',products=rows)
+        if(not items):   
+            cur.execute("SELECT * FROM products")
+            rows = cur.fetchall()   
+            return render_template('bookCatalog.html',products=rows)
+        else:
+            rows = items
+            return render_template('bookCatalog.html',products=rows)
+            
     except Exception as e:
         # Exception handler pinpointing location of error raised
         # Extract source: https://www.codegrepper.com/code-examples/python/python+get+line+number+of+error
@@ -144,29 +150,52 @@ def delete_product(code):
             fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
             print(exc_type, fname, exc_tb.tb_lineno)
 
+#Search function for filtering books
 @app.route('/search', methods=['POST','GET'])
 def searchItems():
     try:
         #Search function request method issued
         if request.method == 'POST':
             
-            databaseStringSearch = []
-            for counter in request.form:
-                databaseStringSearch.append(counter)
-                print(counter)
-            
-            databaseStringSearch.pop(len(databaseStringSearch) - 1)
-            
-            print(databaseStringSearch[0])
-            
             con = sqlite3.connect('./Database/bookProducts.db')
             cur = con.cursor();
-            cur.execute("SELECT * FROM products WHERE author_name =?",[databaseStringSearch[0]])
+            
+            authors = ['Anthony Horowitz','Christopher Paolini','Cliver Cussler','David Baldacci','Henry James','J K Rowling','Jane Austen','John Steinbeck','Oscar Wilde','William Shakespeare']
+            bookType = ['Hardback','Softback','Spiral-bound']
+            genre = ['Action','Adventure','Biography','Comedy','Fantasy','Horror','Mystery','Drama','Science Fiction','Science Fantasy']
+            price = []
+            #Intialisation of list elements to be requested from database
+            formData = []
+            #Loading filter preferences into database string search
+            for filterChecked in request.form:
+                formData.append(filterChecked)
+            
+            dataHolding = []
+                    
+            for checkedItem in formData:
+                for author in authors:
+                    if(checkedItem == author):
+                        print(checkedItem)
+                        dataholding += cur.execute("SELECT * FROM products WHERE author_name=?",[checkedItem])
+            
+            for checkedItem in formData:
+                for book in bookType:
+                    if(checkedItem == book):
+                        print(checkedItem)
+                        dataHolding += cur.execute("SELECT * FROM products WHERE book_type=?",[checkedItem])
+                        
+            for checkedItem in formData:
+                for genreIndex in genre:
+                    if(checkedItem == genreIndex):
+                        print(checkedItem)
+                        dataHolding += cur.execute("SELECT * FROM products WHERE genre=?",[checkedItem])
+                        
             row = cur.fetchall()
-            print("Data value from database: ",row)
+            for i in dataHolding:
+                print(i)
             
         else:
-            return redirect(url_for('.loadBookProducts')) 
+            return redirect(url_for('loadBookProducts',items=dataHolding)) 
 
         
     except Exception as e:
@@ -179,6 +208,9 @@ def searchItems():
         fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
         print(exc_type, fname, exc_tb.tb_lineno)
     finally:
+        #Close connection following execution of try body
+        cur.close()
+        con.close()
         return redirect(url_for('.loadBookProducts'))
 
 def array_merge( first_array , second_array ):

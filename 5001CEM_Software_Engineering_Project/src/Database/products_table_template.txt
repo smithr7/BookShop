@@ -4,6 +4,8 @@ create table products (
      publication_date TEXT NOT NULL,
      book_description TEXT NULL,
      front_cover_picture VARCHAR(100) NULL,
+     genre VARCHAR(20) NOT NULL,
+     book_type VARCHAR(20) NOT NULL,
      trade_price REAL NOT NULL,
      retail_price REAL NOT NULL,
      book_quantity INT NULL);
