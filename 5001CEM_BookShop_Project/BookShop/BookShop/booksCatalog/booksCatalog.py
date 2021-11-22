@@ -1,16 +1,18 @@
-from markupsafe import escape
 from flask import Flask, session, url_for, render_template, request, redirect, abort, make_response
+from flask import Blueprint
 from werkzeug.security import generate_password_hash, check_password_hash
+from markupsafe import escape
 import sqlite3, numpy as np
-from re import *
-import sys, os, math
+import sys, os, math, re
 
-app = Flask(__name__, template_folder='../web/templates/')
+booksCatalog = Blueprint('booksCatalog',__name__, 
+                         template_folder='templates',
+                         static_folder='static')
 app.secret_key = "625273"
 
 #---------------------------------------------------------------------------------------------------------------------------------------------
 
-@app.route('/add', methods=['POST'])
+@booksCatalog.route('/add', methods=['POST'])
 def product_addition_to_cart():
     cursor = None
     try:
@@ -85,7 +87,7 @@ def product_addition_to_cart():
 
 #---------------------------------------------------------------------------------------------------------------------------------------------
         
-@app.route('/books')
+@booksCatalog.route('/books')
 def loadBookProducts():
     try:
         con = sqlite3.connect('./Database/bookProducts.db')
@@ -103,7 +105,7 @@ def loadBookProducts():
         
 #---------------------------------------------------------------------------------------------------------------------------------------------
 
-@app.route('/delete/<string:code>')
+@booksCatalog.route('/delete/<string:code>')
 def delete_product(code):
 	try:
 		all_total_price = 0
@@ -141,7 +143,7 @@ def delete_product(code):
 #---------------------------------------------------------------------------------------------------------------------------------------------
     
 #Search function for filtering books
-@app.route('/search', methods=['GET','POST'])
+@booksCatalog.route('/search', methods=['GET','POST'])
 def searchItems():
     try:
         #Search function request method issued

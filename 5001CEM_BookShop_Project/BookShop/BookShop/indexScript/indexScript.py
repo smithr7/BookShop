@@ -5,7 +5,10 @@ from markupsafe import escape
 import sqlite3, sys, os, re
 
 #Flask object instantiation of class with webpage directory path specified
-indexScript = Blueprint('indexScript'__name__, template_folder='templates')
+indexScript = Blueprint('indexScript'__name__, 
+                        template_folder='templates',
+                        static_folder='static')
+
 indexScript.secret_key = "625273"
 
 #Adding of new book product item
