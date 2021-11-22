@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="https://kit.fontawesome.com/629ae5694a.js" crossorigin="anonymous"></script>
+		<link rel="stylesheet" href="{{url_for('static',filename='css/theme.css')}}">
+	</head>
+	<body>
+		<div class="jumbotron">
+			<h1 class="display-2">BookShop</h1>
+		</div>
+        <!--Navigation pane-->
+		<nav>
+			<ul class="nav nav-fill">
+				<li class="nav-item">
+					<a class="nav-link" href="/index">Home</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">About</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/books">Books</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">Contact us</a>
+				</li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-toggle="modal" data-target="#basket"><span class="fas fa-shopping-basket" style="font-size:20px"></span> Basket</a>
+                </li>
+			</ul>
+		</nav>
+        <br>
+        <!--Basket contents-->
+        <div id="basket" class="modal fade bd-example-modal-xl">
+            <!--Modal box-->
+            <div class="modal-dialog modal-xl" role="document">
+                <!--Inner modal content-->
+                <div class="modal-content">
+                    <!--Header contents in modal-->
+                    <div class="modal-header">
+                        <h3 class="modal-title">Shopping cart</h3>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <!--Modal content-->
+                    <div class="modal-body">
+                        <!--All books added within current session loaded into basket-->
+                        {% if 'cart_item' in session %}
+                                {% for key, val in session['cart_item'].items() %}
+                                {% set quantity = session['cart_item'][key]['quantity'] %}
+                                {% set price = session['cart_item'][key]['price'] %}
+                                {% set item_price = session['cart_item'][key]['total_price']%}
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-3 offset-2">
+                                            isbn-13
+                                        </div>
+                                        <div class="col-*-*" >
+                                            {{ session['cart_item'][key]['ISBN13']}}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3 offset-2">
+                                           Book title
+                                        </div>  
+                                        <div class="col-*-*">
+                                           {{ session['cart_item'][key]['book_description'] }} 
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3 offset-2">
+                                            Author
+                                        </div>
+                                        <div class="col-*-*">
+                                            {{ session['cart_item'][key]['Author'] }}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3 offset-2">
+                                            Genre
+                                        </div>
+                                        <div class="col-*-*">
+                                            empty
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3 offset-2">
+                                            Price
+                                        </div>
+                                        <div class="col-2">
+                                            {{ session['cart_item'][key]['price'] }}
+                                        </div>
+                                        <div class="col-*-*">
+                                            <!--Delete action for products located in basket-->
+                                            <!--Generated incrementally for each product add-->
+                                            <a href="{{ url_for('.delete_product', code=session['cart_item'][key]['ISBN13']) }}" class="btnRemoveAction">
+                                                &times;
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                                <!--Final totals in quantity and price-->
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-2 offset-2">
+                                            Total quantity:
+                                        </div>
+                                        <div class="col-*-*">
+                                            {{session['overall_total_quantity']}}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-2 offset-2">
+                                            Total cost:
+                                        </div>
+                                        <div class="col-*-*">
+                                            &#8356;{{session['overall_total_price']}}
+                                        </div>
+                                    </div>
+                                </div>
+                        {% else: %}
+                            <!--Condition whereupon the basket is empty-->
+                            <div class="row justify-content-md-center">
+                                <div class="col-12">
+                                    Your cart is empty
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <!--Footer contents in modal-->
+                    <div class="modal-footer">
+                        <!--Action going forwards with app-->
+                        <button type="button" class="btn btn-success">Check out</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Search function of book catalog-->
+		<div class="row">
+			<div id="SearchFilter" class="col-2">
+				<form action="/search" method="POST">
+					<p class="searchHeading">Genre</p>
+                    <!--Start of form conditions-->
+					<div class="form-check">
+						<input type="checkbox" class="form-check-input" id="Action" name="Action">
+						<label class="form-check-label" for="Action">Action</label>
+						<br>
+						<input type="checkbox" class="form-check-input" id="Adventure" name="Adventure">
+						<label class="form-check-label" for="Adventure">Adventure</label>
+						<br>
+						<input type="checkbox" class="form-check-input" id="Biography" name="Biography">
+						<label class="form-check-label" for="Biography">Biography</label>
+						<br>
+						<input type="checkbox" class="form-check-input" id="Comedy" name="Comedy">
+						<label class="form-check-label" for="Comedy">Comedy</label>
+						<br>
+						<input type="checkbox" class="form-check-input" id="Fantasy" name="Fantasy">
+						<label class="form-check-label" for="Fantasy">Fantasy</label>
+						<br>
+						<input type="checkbox" class="form-check-input" id="Horror" name="Horror">
+						<label class="form-check-label" for="Horror">Horror</label>
+						<br>
+						<input type="checkbox" class="form-check-input" id="Mystery" name="Mystery">
+						<label class="form-check-label" for="Mystery">Mystery</label>
+						<br>
+						<input type="checkbox" class="form-check-input" id="Drama" name="Drama">
+						<label class="form-check-label" for="Drama">Drama</label>
+						<br>
+						<input type="checkbox" class="form-check-input" id="Science_Fiction" name="Science_Fiction">
+						<label class="form-check-label" for="Science Fiction">Science Fiction</label>
+						<br>
+						<input type="checkbox" class="form-check-input" id="Science_Fantasy" name="Science_Fantasy">
+						<label class="form-check-label" for="Science Fantasy">Science Fantasy</label>
+					</div>
+					<p class="searchHeading">Book type</p>
+					<div class="form-check">
+						<input type="checkbox" class="form-check-input" id="Hardback" name="Hardback">
+						<label class="form-check-label" for="Hardback">Hardback</label>
+						<br>
+						<input type="checkbox" class="form-check-input" id="Softback" name="Hardback">
+						<label class="form-check-label" for="Softback">Softback</label>
+						<br>
+						<input type="checkbox" class="form-check-input" id="Spiral-bound" name="Spiral-bound">
+						<label class="form-check-label" for="Spiral-bound">Spiral-bound</label>
+					</div>
+					<p class="searchHeading">Author</p>
+					<div class="form-check">
+						<input type="checkbox" class="form-check-input" id="Anthony Horowitz" name="Anthony Horowitz">
+						<label class="form-check-label" for="Anthony Horowitz">Anthony Horowitz</label>
+						<br>
+						<input type="checkbox" class="form-check-input" id="Clive Cussler" name="Clive Cussler">
+						<label class="form-check-label" for="Clive Cussler">Clive Cussler</label>
+						<br>
+						<input type="checkbox" class="form-check-input" id="David Baldacci" name="David Baldacci">
+						<label class="form-check-label" for="David Baldacci">David Baldacci</label>
+						<br>
+						<input type="checkbox" class="form-check-input" id="Henry James" name="Henry James">
+						<label class="form-check-label" for="Henry James">Henry James</label>
+						<br>
+						<input type="checkbox" class="form-check-input" id="J K Rowling" name="J K Rowling">
+						<label class="form-check-label" for="J K Rowling">J K Rowling</label>
+						<br>
+						<input type="checkbox" class="form-check-input" id="Jane Austen" name="Jane Austen">
+						<label class="form-check-label" for="Jane Austen">Jane Austen</label>
+						<br>
+						<input type="checkbox" class="form-check-input" id="Oscar Wilde" name="Oscar Wilde">
+						<label class="form-check-label" for="Oscar Wilde">Oscar Wilde</label>
+					</div>
+					<p class="searchHeading">Price</p>
+					<div class="form-check">
+						<input type="checkbox" class="form-check-input" id="LessThan10" name="LessThan10">
+						<label class="form-check-label" for="LessThan10">Less than £10</label>
+						<br>
+						<input type="checkbox" class="form-check-input" id="10and20" name="10and20">
+						<label class="form-check-label" for="10and20">Between £10 and £20</label>
+						<br>
+						<input type="checkbox" class="form-check-input" id="20and30" name="20and30">
+						<label class="form-check-label" for="20and30">Between £20 and £30</label>
+						<br>
+						<input type="checkbox" class="form-check-input" id="30and40" name="30and40">
+						<label class="form-check-label" for="30and40">Between £30 and £40</label>
+						<br>
+						<input type="checkbox" class="form-check-input" id="40and50" name="40and50">
+						<label class="form-check-label" for="40and50">Between £40 and £50</label>
+						<br>
+						<input type="checkbox" class="form-check-input" id="GreaterThan50" name="GreaterThan50">
+						<label class="form-check-label" for="GreaterThan50">Greater than £50</label>
+					</div>
+					<br>
+					<button type="submit" name="submit" id="submit" class="btn btn-primary">Search</button>
+                    <a href="/books" class="btn btn-light">Clear</a>
+                </form>
+			</div>
+            <!--Book highlights carousel-->
+			<div id="booksCatalog" class="col-10">
+				<div class="row">
+					<div id="productItems" class="col-12">
+                    <!--Listing of each book item in database-->
+                    {% for book in products %}
+                        <form method="POST" action="/add">
+                            <div id="bookItem" class="col-3">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <p>{{book[4]}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <!--Book title-->
+                                    <div class="col-4">
+                                        <p>{{book[3]}}</p>
+                                    </div>
+                                    <!--Book author-->
+                                    <div class="col-4">
+                                        <p>{{book[1]}}</p>
+                                    </div>
+                                    <!--Book price-->
+                                    <div class="col-4">
+                                        <p>&#8356;{{book[7]}}</p>
+                                        <input type="hidden" id="quantity" name="quantity" value="1"/>
+                                        <input type="hidden" id="isbn" name="isbn" value="{{book[0]}}"/>
+                                        <input type="submit" class="btn btn-light" value="Add to cart"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    {% endfor %}
+				    </div>
+                </div>
+			</div>
+		</div>
+   </body>
+</html>
