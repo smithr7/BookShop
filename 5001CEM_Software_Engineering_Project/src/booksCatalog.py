@@ -8,6 +8,8 @@ import sys, os, math
 app = Flask(__name__, template_folder='../web/templates/')
 app.secret_key = "625273"
 
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
 @app.route('/add', methods=['POST'])
 def product_addition_to_cart():
     cursor = None
@@ -81,41 +83,26 @@ def product_addition_to_cart():
         cur.close()
         con.close()
 
+#---------------------------------------------------------------------------------------------------------------------------------------------
+        
 @app.route('/books')
-def loadBookProducts(items = []):
+def loadBookProducts():
     try:
-        print(items)
         con = sqlite3.connect('./Database/bookProducts.db')
-        cur = con.cursor();
-        if(not items):   
-            cur.execute("SELECT * FROM products")
-            rows = cur.fetchall()   
-            return render_template('bookCatalog.html',products=rows)
-        else:
-            rows = items
-            return render_template('bookCatalog.html',products=rows)
-            
+        cur = con.cursor();  
+        cur.execute("SELECT * FROM products")
+        rows = cur.fetchall()   
+        return render_template('bookCatalog.html',products=rows)
     except Exception as e:
-        # Exception handler pinpointing location of error raised
-        # Extract source: https://www.codegrepper.com/code-examples/python/python+get+line+number+of+error
-        # Website url: https://www.codegrepper.com/
-        # Author: Confused Cottonmouth
-        # Access date: 11/2021
         exc_type, exc_obj, exc_tb = sys.exc_info()
         fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
         print(e,exc_type, fname, exc_tb.tb_lineno)
     finally:
         cur.close()
         con.close()
-
-@app.route('/empty')
-def empty_cart():
-    try:
-        session.clear()
-        return redirect(url_for('.products'))
-    except Exception as e:
-        print(e)
         
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
 @app.route('/delete/<string:code>')
 def delete_product(code):
 	try:
@@ -149,9 +136,12 @@ def delete_product(code):
             exc_type, exc_obj, exc_tb = sys.exc_info()
             fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
             print(exc_type, fname, exc_tb.tb_lineno)
+                
 
+#---------------------------------------------------------------------------------------------------------------------------------------------
+    
 #Search function for filtering books
-@app.route('/search', methods=['POST','GET'])
+@app.route('/search', methods=['GET','POST'])
 def searchItems():
     try:
         #Search function request method issued
@@ -189,13 +179,10 @@ def searchItems():
                     if(checkedItem == genreIndex):
                         print(checkedItem)
                         dataHolding += cur.execute("SELECT * FROM products WHERE genre=?",[checkedItem])
-                        
-            row = cur.fetchall()
-            for i in dataHolding:
-                print(i)
             
+            return render_template('bookCatalog.html',products=dataHolding)
         else:
-            return redirect(url_for('loadBookProducts',items=dataHolding)) 
+            return redirect(url_for('.loadBookProducts'))
 
         
     except Exception as e:
@@ -207,12 +194,10 @@ def searchItems():
         exc_type, exc_obj, exc_tb = sys.exc_info()
         fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
         print(exc_type, fname, exc_tb.tb_lineno)
-    finally:
-        #Close connection following execution of try body
-        cur.close()
-        con.close()
-        return redirect(url_for('.loadBookProducts'))
 
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+    
 def array_merge( first_array , second_array ):
 	if isinstance( first_array , list ) and isinstance( second_array , list ):
 		return first_array + second_array

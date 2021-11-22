@@ -117,3 +117,19 @@ a {
     position:relative;
     float:left;
 }
+/*Books catalog*/
+#booksCatalog {
+    height:100vh;
+    overflow-y:scroll;
+}
+#booksCatalog .row .col-4 {
+	/*border-style: solid;
+	border-width: 0.5px;*/
+	height:10vh;
+    padding:0px;
+}
+#booksCatalog .row .col-4 .row .col-4 {
+    height:5vh;
+    width:auto;
+    padding:0px;
+}

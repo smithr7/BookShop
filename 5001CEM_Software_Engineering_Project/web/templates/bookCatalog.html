@@ -231,36 +231,34 @@
 					</div>
 					<br>
 					<button type="submit" name="submit" id="submit" class="btn btn-primary">Search</button>
-				</form>
+                    <a href="/books" class="btn btn-light">Clear</a>
+                </form>
 			</div>
             <!--Book highlights carousel-->
-			<div id="BookCatalog" class="col-10">
+			<div id="booksCatalog" class="col-10">
 				<div class="row">
 					<div id="productItems" class="col-12">
                     <!--Listing of each book item in database-->
                     {% for book in products %}
                         <form method="POST" action="/add">
                             <div id="bookItem" class="col-3">
-                                <div class="row" style="height:50%;">
+                                <div class="row">
                                     <div class="col-12">
                                         <p>{{book[4]}}</p>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <!--Book title-->
-                                    <div class="col-3">
+                                    <div class="col-4">
                                         <p>{{book[3]}}</p>
                                     </div>
                                     <!--Book author-->
-                                    <div class="col-3">
+                                    <div class="col-4">
                                         <p>{{book[1]}}</p>
                                     </div>
                                     <!--Book price-->
-                                    <div class="col-2">
+                                    <div class="col-4">
                                         <p>&#8356;{{book[7]}}</p>
-                                    </div>
-                                    <!--Shopping cart actions-->
-                                    <div class="col-3">
                                         <input type="hidden" id="quantity" name="quantity" value="1"/>
                                         <input type="hidden" id="isbn" name="isbn" value="{{book[0]}}"/>
                                         <input type="submit" class="btn btn-light" value="Add to cart"/>
