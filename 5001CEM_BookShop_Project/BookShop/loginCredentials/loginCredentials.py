@@ -31,7 +31,7 @@ def login():
     
 #Display of login html webpage
 def display_login():
-    return render_template('LoginCredentials.html',page=url_for('login'))
+    return render_template('LoginCredentials.html')
 
 #Validate login credentials against stored data
 def login_process(username, password):
