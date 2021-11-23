@@ -1,18 +1,21 @@
+#Core required Libraries for module execution
 from flask import Flask, session, url_for, render_template, request, redirect, abort, make_response
+#Module registration information
 from flask import Blueprint
+
 from werkzeug.security import generate_password_hash, check_password_hash
 from markupsafe import escape
-import sqlite3, numpy as np
-import sys, os, math, re
+import sqlite3, sys, os, re
 
-booksCatalog = Blueprint('booksCatalog',__name__, 
-                         template_folder='templates',
-                         static_folder='static')
-app.secret_key = "625273"
+#Flask object instantiation of class with webpage directory path specified
+indexScript = Blueprint('indexScript'__name__, 
+                        template_folder='templates',
+                        static_folder='static')
 
-#---------------------------------------------------------------------------------------------------------------------------------------------
+indexScript.secret_key = "625273"
 
-@booksCatalog.route('/add', methods=['POST'])
+#Adding of new book product item
+@indexScript.route('/add', methods=['POST'])
 def product_addition_to_cart():
     cursor = None
     try:
@@ -43,7 +46,7 @@ def product_addition_to_cart():
                 if row[0] in session['cart_item']:
                     for key, value in session['cart_item'].items():
                         if row[0] == key:
-                            #session['cart_item'][key]['quantity'] = quantity
+                            session['cart_item'][key]['quantity'] = quantity
                             previous_quantity = session['cart_item'][key]['quantity']
                             total_quantity = previous_quantity + quantity
                             session['cart_item'][key]['quantity'] = total_quantity
@@ -68,7 +71,7 @@ def product_addition_to_cart():
             session['overall_total_price'] = overall_total_price
             
             #Redirection to home screen once completed
-            return redirect(url_for('.loadBookProducts'))
+            return redirect(url_for('.loadHomeScreen'))
         else:
             return 'Error while adding item to cart'
     except Exception as e:
@@ -85,27 +88,31 @@ def product_addition_to_cart():
         cur.close()
         con.close()
 
-#---------------------------------------------------------------------------------------------------------------------------------------------
-        
-@booksCatalog.route('/books')
-def loadBookProducts():
+@indexScript.route('/index')
+def loadHomeScreen():
     try:
-        con = sqlite3.connect('./Database/bookProducts.db')
-        cur = con.cursor();  
+        path = './Database/bookProducts.db'
+        con = sqlite3.connect(path)
+        cur = con.cursor();
+        print(cur)
         cur.execute("SELECT * FROM products")
-        rows = cur.fetchall()   
-        return render_template('bookCatalog.html',products=rows)
+        rows = cur.fetchall()
+        return render_template('index.html',products=rows)
     except Exception as e:
-        exc_type, exc_obj, exc_tb = sys.exc_info()
-        fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-        print(e,exc_type, fname, exc_tb.tb_lineno)
+        print(e)
     finally:
         cur.close()
         con.close()
-        
-#---------------------------------------------------------------------------------------------------------------------------------------------
 
-@booksCatalog.route('/delete/<string:code>')
+@indexScript.route('/empty')
+def empty_cart():
+    try:
+        session.clear()
+        return redirect(url_for('.products'))
+    except Exception as e:
+        print(e)
+        
+@indexScript.route('/delete/<string:code>')
 def delete_product(code):
 	try:
 		all_total_price = 0
@@ -128,7 +135,7 @@ def delete_product(code):
 		else:
 			session['all_total_quantity'] = all_total_quantity
 			session['all_total_price'] = all_total_price
-		return redirect(url_for('.loadBookProducts'))
+		return redirect(url_for('.loadHomeScreen'))
 	except Exception as e:
             # Exception handler pinpointing location of error raised
             # Extract source: https://www.codegrepper.com/code-examples/python/python+get+line+number+of+error
@@ -138,67 +145,6 @@ def delete_product(code):
             exc_type, exc_obj, exc_tb = sys.exc_info()
             fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
             print(exc_type, fname, exc_tb.tb_lineno)
-                
-
-#---------------------------------------------------------------------------------------------------------------------------------------------
-    
-#Search function for filtering books
-@booksCatalog.route('/search', methods=['GET','POST'])
-def searchItems():
-    try:
-        #Search function request method issued
-        if request.method == 'POST':
-            
-            con = sqlite3.connect('./Database/bookProducts.db')
-            cur = con.cursor();
-            
-            authors = ['Anthony Horowitz','Christopher Paolini','Cliver Cussler','David Baldacci','Henry James','J K Rowling','Jane Austen','John Steinbeck','Oscar Wilde','William Shakespeare']
-            bookType = ['Hardback','Softback','Spiral-bound']
-            genre = ['Action','Adventure','Biography','Comedy','Fantasy','Horror','Mystery','Drama','Science Fiction','Science Fantasy']
-            price = []
-            #Intialisation of list elements to be requested from database
-            formData = []
-            #Loading filter preferences into database string search
-            for filterChecked in request.form:
-                formData.append(filterChecked)
-            
-            dataHolding = []
-                    
-            for checkedItem in formData:
-                for author in authors:
-                    if(checkedItem == author):
-                        print(checkedItem)
-                        dataholding += cur.execute("SELECT * FROM products WHERE author_name=?",[checkedItem])
-            
-            for checkedItem in formData:
-                for book in bookType:
-                    if(checkedItem == book):
-                        print(checkedItem)
-                        dataHolding += cur.execute("SELECT * FROM products WHERE book_type=?",[checkedItem])
-                        
-            for checkedItem in formData:
-                for genreIndex in genre:
-                    if(checkedItem == genreIndex):
-                        print(checkedItem)
-                        dataHolding += cur.execute("SELECT * FROM products WHERE genre=?",[checkedItem])
-            
-            return render_template('bookCatalog.html',products=dataHolding)
-        else:
-            return redirect(url_for('.loadBookProducts'))
-
-        
-    except Exception as e:
-        # Exception handler pinpointing location of error raised
-        # Extract source: https://www.codegrepper.com/code-examples/python/python+get+line+number+of+error
-        # Website url: https://www.codegrepper.com/
-        # Author: Confused Cottonmouth
-        # Access date: 11/2021
-        exc_type, exc_obj, exc_tb = sys.exc_info()
-        fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-        print(exc_type, fname, exc_tb.tb_lineno)
-
-
-#---------------------------------------------------------------------------------------------------------------------------------------------
     
 def array_merge( first_array , second_array ):
 	if isinstance( first_array , list ) and isinstance( second_array , list ):
@@ -208,5 +154,3 @@ def array_merge( first_array , second_array ):
 	elif isinstance( first_array , set ) and isinstance( second_array , set ):
 		return first_array.union( second_array )
 	return False	
-
-

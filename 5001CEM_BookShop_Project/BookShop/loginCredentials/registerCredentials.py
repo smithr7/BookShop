@@ -1,8 +1,10 @@
+#Core required Libraries for module execution
 from flask import Flask, url_for, render_template, request, redirect, abort, make_response
+#Module registration information
 from flask import Blueprint
+#Database libraries modules required
 from markupsafe import escape
 import sqlite3, os, re
-
 
 registerCredentials = Blueprint('registerCredentials',__name__,
                              template_folder="templates",
@@ -12,7 +14,7 @@ registerCredentials = Blueprint('registerCredentials',__name__,
 #----------------------------------------------------------------------------------------------------------------------------------------
 
 #Registering data request from HTML form
-@loginCredentials.route('/register', methods=['GET','POST'])
+@registerCredentials.route('/register', methods=['GET','POST'])
 
 def register():
     if request.method == 'POST':

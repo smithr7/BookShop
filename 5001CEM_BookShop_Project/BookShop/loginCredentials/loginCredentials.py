@@ -1,6 +1,9 @@
+#Core required Libraries for module execution
 from flask import Flask, url_for, render_template, request, redirect, abort, make_response
+#Module registration information
 from flask import Blueprint
 from flask import current_app as app
+#Database libraries modules required
 from markupsafe import escape
 import sqlite3, os, re
 
