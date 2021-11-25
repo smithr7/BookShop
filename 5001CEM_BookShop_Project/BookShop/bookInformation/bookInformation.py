@@ -35,4 +35,4 @@ def bookDescription():
 #     cur = con.cursor()
 #     cur.execute("SELECT * FROM products WHERE ISBN13=?",(ISBN,))
 #     record = cur.fetchone()
-#     return render_template('bookPreview.html',product=isbn)
+#     return render_template('bookPreview.html',product=record)
