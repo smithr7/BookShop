@@ -1,5 +1,14 @@
 #Core required Libraries for module execution
-from flask import Flask, url_for, render_template, request, redirect, abort, make_response
+from flask import Flask
+from flask import url_for
+from flask import render_template
+from flask import request
+from flask import redirect
+from flask import abort
+from flask import make_response
+#Login and session modules required
+from flask_login import user_loaded_from_header
+from flask_login import LoginManager
 #Module registration information
 from flask import Blueprint
 from flask import current_app as app
@@ -21,30 +30,31 @@ regularExpression = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
 #Login data request from HTML form
 def login():
     if request.method == 'POST':
-        #email address validation check
-        if(re.fullmatch(regularExpression,requestform['username'])):
-            return login_process(request.form['username'], request.form['password'])
-        else:
-            abort(403)
-    else:
-        return display_login()
-    
-#Display of login html webpage
-def display_login():
+        
+        if(login_user(form.request['username'], form.request['password'])):
+            return (url_for('.index'))
+        else: 
+            return ('LoginCredentials.html')
+        
+        next = flask.request.args.get('next')
+        if not is_safe_url(next):
+            return flask.abort(400)
+        
+        return redirect(next or flask.url_for('/index'))
     return render_template('LoginCredentials.html')
-
-#Validate login credentials against stored data
-def login_process(username, password):
-    #Database connection
-    databaseConnection = sqlite3.connect('./Database/userCredentials.db')
-    current = databaseConnection.cursor();
-    #Query issued to database
-    current.execute("SELECT count(*) FROM userCredentials WHERE email_address = ? AND password = ?;",(username,password))
-    #Ensuring user/administrative record exists
-    if(int(current.fetchone()[0]))>0:
-        return render_template('LoginCredentials.html',page=url_for('login'))
+        
+def login_user(username,password)
+    username = re.sub('[;]','',username)
+    password = re.sub('[;]','',password)
+    if(databaseAccess(username,password) > 0)
+        return True
     else:
-        #Failure to locate re-loads form
-        return render_template('LoginCredentials.html',page=url_for('login'))
+        return False
+
+def databaseAccess(username,password)
+    databaseConnection = sqlite3.connect('../Database/userCredentials.db')
+    cursor = databaseConnection.cursor();
+    cursor.execute('SELECT count(*) FROM userCredentials WHERE email_address =? AND password =?',(username,password))
+    return int(current.fetchone()[0])
 
     
