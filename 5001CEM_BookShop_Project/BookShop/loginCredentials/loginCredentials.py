@@ -10,16 +10,19 @@ from flask import make_response
 #Login and session modules required
 from flask_login import user_loaded_from_header
 from flask_login import LoginManager
+from flask_login import current_user, logout_user
 #Module registration information
 from flask import Blueprint
 from flask import current_app as app
 #Database libraries modules required
 from markupsafe import escape
 import sqlite3, os, re
+#Authorisation imports
 
 loginCredentials = Blueprint('loginCredentials',__name__,
                              template_folder="templates",
                              static_folder="static")
+compile_auth_assets(app)
 
 regularExpression = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
 
@@ -36,9 +39,9 @@ def login():
         
         if(login_user(form.request['username'], form.request['password'])):
             userSession(form.request['username'])
-            return (url_for('.index'))
+            return render_template(url_for('/index'),)
         else: 
-            return ('LoginCredentials.html')
+            return render_template('LoginCredentials.html')
         
         next = flask.request.args.get('next')
         if not is_safe_url(next):
