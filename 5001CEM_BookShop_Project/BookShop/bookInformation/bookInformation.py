@@ -12,27 +12,28 @@ import sqlite3
 from re import *
 import sys,os
 
-# bookInformation = Blueprint("bookInformation",__name__,
-#                             template_folder='templates')
-# bookInformation.secret_key = "625273"
+bookInformation = Blueprint("bookInformation",__name__,
+                             template_folder='templates',
+                             static_folder="static")
+bookInformation.secret_key = "625273"
 
 #Testing purposes 
 
-app = Flask(__name__)
+# app = Flask(__name__)
 
-@app.route('/bookDescription', methods=['POST','GET'])
-def bookDescription():
-    isbn = "9780330520331"
-    con = sqlite3.connect('../Database/bookProducts.db')
-    cur = con.cursor()
-    cur.execute("SELECT * FROM products WHERE ISBN13=?",(isbn,))
-    record = cur.fetchone()
-    return render_template('bookPreview.html',Product=record)
-
-# @bookInformation.route('/bookDescription/<string:ISBN>', methods=['POST','GET'])
-# def bookDescription(ISBN):
+# @app.route('/bookDescription', methods=['POST','GET'])
+# def bookDescription():
+#     isbn = "9780330520331"
 #     con = sqlite3.connect('../Database/bookProducts.db')
 #     cur = con.cursor()
-#     cur.execute("SELECT * FROM products WHERE ISBN13=?",(ISBN,))
+#     cur.execute("SELECT * FROM products WHERE ISBN13=?",(isbn,))
 #     record = cur.fetchone()
-#     return render_template('bookPreview.html',product=record)
+#     return render_template('bookPreview.html',Product=record)
+
+@bookInformation.route('/bookDescription/<string:ISBN>', methods=['POST','GET'])
+def bookDescription(ISBN):
+    con = sqlite3.connect('../Database/bookProducts.db')
+    cur = con.cursor()
+    cur.execute("SELECT * FROM products WHERE ISBN13=?",(ISBN,))
+    record = cur.fetchone()
+    return render_template('bookPreview.html',product=record)

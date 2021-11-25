@@ -7,8 +7,8 @@ from markupsafe import escape
 import sqlite3, os, re
 
 registerCredentials = Blueprint('registerCredentials',__name__,
-                             template_folder="templates",
-                             static_folder='static')
+                                template_folder="templates",
+                                static_folder="static")
 
 #Register action
 #----------------------------------------------------------------------------------------------------------------------------------------

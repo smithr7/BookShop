@@ -5,6 +5,7 @@ from flask import render_template
 from flask import request
 from flask import redirect
 from flask import abort
+from flask import session
 from flask import make_response
 #Login and session modules required
 from flask_login import user_loaded_from_header
@@ -18,7 +19,7 @@ import sqlite3, os, re
 
 loginCredentials = Blueprint('loginCredentials',__name__,
                              template_folder="templates",
-                             static_folder='static')
+                             static_folder="static")
 
 regularExpression = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
 
@@ -46,19 +47,19 @@ def login():
         return redirect(next or flask.url_for('/index'))
     return render_template('LoginCredentials.html')
         
-def login_user(username,password)
+def login_user(username,password):
     username = re.sub('[;]','',username)
     password = re.sub('[;]','',password)
-    if(databaseAccess(username,password) > 0)
+    if(databaseAccess(username,password) > 0):
         return True
     else:
         return False
 
 def userSession(userId):
-    session['username'] = userID
+    session['username'] = userId
     return 0
     
-def databaseAccess(username,password)
+def databaseAccess(username,password):
     databaseConnection = sqlite3.connect('../Database/userCredentials.db')
     cursor = databaseConnection.cursor();
     cursor.execute('SELECT count(*) FROM userCredentials WHERE email_address =? AND password =?',(username,password))

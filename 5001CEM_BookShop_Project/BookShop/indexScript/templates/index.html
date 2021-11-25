@@ -5,7 +5,13 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <script src="https://kit.fontawesome.com/629ae5694a.js" crossorigin="anonymous"></script>
-		<link rel="stylesheet" href="{{url_for('static',filename='css/theme.css')}}">
+		{% assets "indexScript_style_bundle" %}
+        <link 
+         rel="stylesheet" 
+         href="{{ ASSET_URL }}"
+         type="text/css"
+        />
+        {% endassets %}
 	</head>
 	<body>
 		<div class="jumbotron">
