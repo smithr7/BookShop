@@ -30,8 +30,11 @@ regularExpression = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
 #Login data request from HTML form
 def login():
     if request.method == 'POST':
+        login_manager = LoginManager()
+        login_manager.init_app(app)
         
         if(login_user(form.request['username'], form.request['password'])):
+            userSession(form.request['username'])
             return (url_for('.index'))
         else: 
             return ('LoginCredentials.html')
@@ -51,6 +54,10 @@ def login_user(username,password)
     else:
         return False
 
+def userSession(userId):
+    session['username'] = userID
+    return 0
+    
 def databaseAccess(username,password)
     databaseConnection = sqlite3.connect('../Database/userCredentials.db')
     cursor = databaseConnection.cursor();
