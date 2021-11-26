@@ -21,7 +21,7 @@
 						<div class="card">
 							<h1 class="display-3">Bookshop</h1>
                             <h3 class="display-5">Register</h3>
-							<form action="">
+							<form action="{{page}}" method="POST">
 								<div class="form-group">
 									<label for="email">Email address:</label>
 									<input type="email" class="form-control" placeholder="Enter email" id="email">
@@ -42,8 +42,13 @@
                                     <label for="second_name">Second name:</label>
                                     <input type="text" class="form-control" placeholder="Enter second name" id="second_name">
                                 </div>
-                                <div c
-								<button type="button" class="btn btn-primary">register</button>
+                                {% if userExists == True %}
+                                    <div class="alert alert-warning">
+                                        <strong>Warning:</strong>user exists
+                                    </div>
+                                {% endif %}
+								<button type="submit" class="btn btn-primary">register</button>
+                                <a href="/">Already have an account? Sign in</a>
 							</form>
 						</div>
 					</div>

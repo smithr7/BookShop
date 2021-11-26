@@ -7,10 +7,6 @@ from flask import redirect
 from flask import abort
 from flask import session
 from flask import make_response
-#Login and session modules required
-from flask_login import user_loaded_from_header
-from flask_login import LoginManager
-from flask_login import current_user, logout_user
 #Module registration information
 from flask import Blueprint
 from flask import current_app as app
@@ -22,7 +18,6 @@ import sqlite3, os, re
 loginCredentials = Blueprint('loginCredentials',__name__,
                              template_folder="templates",
                              static_folder="static")
-compile_auth_assets(app)
 
 regularExpression = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
 
@@ -34,25 +29,27 @@ regularExpression = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
 #Login data request from HTML form
 def login():
     if request.method == 'POST':
-        login_manager = LoginManager()
-        login_manager.init_app(app)
-        
-        if(login_user(form.request['username'], form.request['password'])):
-            userSession(form.request['username'])
+        username = request.form['username']
+        password = request.form['password']
+        if(login_user(username,password)):
+            userSession(request.form['username'])
             return render_template(url_for('/index'),)
         else: 
-            return render_template('LoginCredentials.html')
+            loginStatus = 'Failed'
+            return render_template('LoginCredentials.html',login=loginStatus)
         
         next = flask.request.args.get('next')
         if not is_safe_url(next):
             return flask.abort(400)
         
         return redirect(next or flask.url_for('/index'))
-    return render_template('LoginCredentials.html')
+    return render_template('LoginCredentials.html',login=url_for('login'))
         
 def login_user(username,password):
     username = re.sub('[;]','',username)
+    print(username)
     password = re.sub('[;]','',password)
+    print(password)
     if(databaseAccess(username,password) > 0):
         return True
     else:
@@ -63,9 +60,10 @@ def userSession(userId):
     return 0
     
 def databaseAccess(username,password):
-    databaseConnection = sqlite3.connect('../Database/userCredentials.db')
+    print("Current directory: {0}".format(os.getcwd()))
+    databaseConnection = sqlite3.connect('./Database/userCredentials.db')
     cursor = databaseConnection.cursor();
     cursor.execute('SELECT count(*) FROM userCredentials WHERE email_address =? AND password =?',(username,password))
-    return int(current.fetchone()[0])
+    return int(cursor.fetchone()[0])
 
     
