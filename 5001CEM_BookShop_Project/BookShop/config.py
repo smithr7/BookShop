@@ -2,7 +2,7 @@
 class Config:
     #Flask environment
     SECRET_KEY = '625273'
-    FLASK_ENV = 'development'
+    FLASK_ENV = 'Development'
     TESTING = True
     DEBUG = True
     

@@ -23,42 +23,44 @@ regularExpression = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
 
 #Login action
 #------------------------------------------------------------------------------------------------------------------------------------
-
+@loginCredentials.route('/authenticated', methods=['GET'])
+def loadMainPage():
+    return redirect('/index')
 #Login url extension
 @loginCredentials.route('/', methods=['GET','POST'])
 #Login data request from HTML form
 def login():
+    #Specify if POST method has been sent
     if request.method == 'POST':
+        #Requesting form data to be stored
         username = request.form['username']
         password = request.form['password']
+        loginStatus = ''
+        #Securing email and password 
         if(login_user(username,password)):
-            userSession(request.form['username'])
-            return render_template(url_for('/index'),)
+            print("Yo bro")
+            print(request.method)
+            #Requesting new user session be generated
+            return redirect('/authenticated')
         else: 
+            #Login failed response 
             loginStatus = 'Failed'
+            #Issue warning alert to user
             return render_template('LoginCredentials.html',login=loginStatus)
-        
-        next = flask.request.args.get('next')
-        if not is_safe_url(next):
-            return flask.abort(400)
-        
-        return redirect(next or flask.url_for('/index'))
-    return render_template('LoginCredentials.html',login=url_for('login'))
-        
+    #Return html and listen for form submission
+    return render_template('LoginCredentials.html',login=url_for('.login'))
+
+#Email and password security
 def login_user(username,password):
     username = re.sub('[;]','',username)
-    print(username)
     password = re.sub('[;]','',password)
-    print(password)
+    #Boolean return if record found
     if(databaseAccess(username,password) > 0):
         return True
     else:
         return False
-
-def userSession(userId):
-    session['username'] = userId
-    return 0
     
+#Accessing database
 def databaseAccess(username,password):
     print("Current directory: {0}".format(os.getcwd()))
     databaseConnection = sqlite3.connect('./Database/userCredentials.db')
