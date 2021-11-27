@@ -16,7 +16,7 @@ class Config:
     DEBUG = True
     
     #Session initialisation
-    SESSION_TYPE = 'filesystem'
+    SESSION_TYPE = 'filesystem' #Requires local file system as no administrative privileges given
     SESSION_PERMENANT = True
     PERMENANT_SESSION_LIFETIME = 60000
     

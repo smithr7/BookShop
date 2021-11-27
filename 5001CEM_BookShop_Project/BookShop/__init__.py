@@ -4,6 +4,7 @@ from flask import Flask
 from flask_session import Session
 from flask_assets import Environment
 
+#Create session instance
 sessionInstance = Session()
 
 #Create BookShop Flask instance
@@ -12,10 +13,10 @@ def create_app():
     app.config.from_object('config.Config')
     assets = Environment()
     
+    #Bind session instance across object
     sessionInstance.init_app(app)
     assets.init_app(app)
 
-    
     #Fetching Flask Blueprint templates to load into instance
     with app.app_context():
         from .loginCredentials.loginCredentials import loginCredentials

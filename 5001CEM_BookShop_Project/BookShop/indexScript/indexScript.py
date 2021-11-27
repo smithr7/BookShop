@@ -12,8 +12,6 @@ indexScript = Blueprint('indexScript',__name__,
                         template_folder='templates',
                         static_folder="static")
 
-indexScript.secret_key = "625273"
-
 #Adding of new book product item
 @indexScript.route('/add', methods=['POST'])
 def product_addition_to_cart():

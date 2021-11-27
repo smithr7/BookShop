@@ -41,6 +41,7 @@ def login():
         loginStatus = ''
         #Securing email and password 
         if(login_user(username,password)):
+            #Set user session
             session['key'] = username
             #Redirection --Security flaw--
             return redirect('/authenticated')
