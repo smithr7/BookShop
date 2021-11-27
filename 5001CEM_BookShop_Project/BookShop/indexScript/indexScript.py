@@ -89,16 +89,16 @@ def product_addition_to_cart():
 @indexScript.route('/index')
 def loadHomeScreen():
     try:
-        con = sqlite3.connect('./Database/bookProducts.db')
-        cursor = con.cursor();
-        cur.execute("SELECT * FROM products")
-        rows = cur.fetchall()
+        connection = sqlite3.connect('./Database/bookProducts.db')
+        cursor = connection.cursor();
+        cursor.execute("SELECT * FROM products")
+        rows = cursor.fetchall()
         return render_template('index.html',products=rows)
     except Exception as e:
         print(e)
     finally:
-        cur.close()
-        con.close()
+        cursor.close()
+        connection.close()
 
 @indexScript.route('/empty')
 def empty_cart():
