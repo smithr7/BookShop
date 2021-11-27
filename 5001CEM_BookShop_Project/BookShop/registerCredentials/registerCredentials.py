@@ -10,7 +10,7 @@ import sqlite3, os, re
 registerCredentials = Blueprint('registerCredentials',__name__,
                                 template_folder="templates",
                                 static_folder="static")
-
+#Validate email
 regularExpression = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
 
 #Register action
@@ -36,6 +36,7 @@ def display_registration_form():
 #Database registration data input
 def registration_process(email,password,fname,sname,oname,dob):
     registered = False
+    
     #Database connection
     databaseConnection = sqlite3.connect('./Database/userCredentials.db')
     cursor = databaseConnection.cursor();

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="https://kit.fontawesome.com/629ae5694a.js" crossorigin="anonymous"></script>
+		{% assets "indexScript_style_bundle" %}
+        <link 
+         rel="stylesheet" 
+         href="{{ ASSET_URL }}"
+         type="text/css"
+        />
+        {% endassets %}
+	</head>
+	<body>
+		<div class="jumbotron">
+			<h1 class="display-2">BookShop</h1>
+		</div>
+        <!--Navigation pane-->
+		<nav>
+			<ul class="nav nav-fill">
+				<li class="nav-item">
+					<a class="nav-link" href="#"><span class="fa fa-home"></span> Home</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">About</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/books">Books</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">Contact us</a>
+				</li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-toggle="modal" data-target="#basket"><span class="fas fa-shopping-basket" style="font-size:20px"></span>{{session['total_quantity']}} Basket</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout"><span class="fa fa-sign-out"></span>Sign out</a>
+                </li>
+			</ul>
+		</nav>
+        <br>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-4">
+                    
+                </div>
+                <div class="col-8">
+                        <div class="row">
+                            <div class="col">
+                                ISBN
+                            </div>
+                            <div class="col">
+                                Title
+                            </div>
+                            <div class="col">
+                                Genre
+                            </div>
+                            <div class="col">
+                                publication date
+                            </div>
+                            <div class="col">
+                                book type
+                            </div>
+                            <div class="col">
+                                trade price
+                            </div>
+                            <div class="col">
+                                retail price
+                            </div>
+                            <div class="col">
+                                quantity                        
+                            </div>
+                        </div>                                     
+                    {% for items in Products %}
+                        <div class="row">                              
+                            <div class="col">
+                                items[0]
+                            </div>
+                            <div class="col">
+                                items[3]
+                            </div>
+                            <div class="col">
+                                items[5]
+                            </div>
+                            <div class="col">
+                                items[2]
+                            </div>
+                            <div class="col">
+                                items[6]
+                            </div>
+                            <div class="col">
+                                items[7]
+                            </div>
+                            <div class="col">
+                                items[8]
+                            </div>
+                            <div class="col">
+                                items[9]                        
+                            </div>
+                            <div class="col">
+                                <a href="url_for('delete_record',items[0])" class="btnActionRemove">
+                                    &times;
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

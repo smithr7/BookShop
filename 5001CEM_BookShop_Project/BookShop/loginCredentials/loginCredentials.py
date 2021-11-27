@@ -19,6 +19,8 @@ from flask_login import current_user, logout_user, login_required
 loginCredentials = Blueprint('loginCredentials',__name__,
                              template_folder="templates",
                              static_folder="static")
+
+#Validate email
 regularExpression = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
 
 #Login action
@@ -60,10 +62,11 @@ def login_user(username,password):
     #Boolean return if record found
     if(databaseAccess(username,password) > 0):
         return True
-        databaseConnection.close()
+        sqlite3.connect
         cursor.close()
     else:
         return False
+    databaseConnection.close()
     
 #Accessing database
 def databaseAccess(username,password):

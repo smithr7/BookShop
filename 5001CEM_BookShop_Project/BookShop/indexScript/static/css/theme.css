@@ -1,6 +1,6 @@
 /*home styles*/
 p {
-    font-size:10pt;
+    font-size:60px;
 }
 .jumbotron {
 	height:100%;
@@ -12,6 +12,7 @@ p {
 }
 .nav-item {
     display:block;
+    height:auto;
     color:#000000;
     font-size:16pt;
 }
