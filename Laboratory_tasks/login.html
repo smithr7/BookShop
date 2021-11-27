@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Login</title>
+    </head>
+    <body>
+        <div id="loginForm">
+            <h1>Login</h1>
+            <p>Please enter your username and password</p>
+            <form action="{{page}}" method="post">
+                <label for="uname">Username:</label><br>
+                <input type="text" id="uname" name="uname" value="John"><br>
+                <label for="password">Password:</label><br>
+                <input type="text" id="pwd" name="pwd" value="Password"><br><br>
+                <input type="submit" value="Submit">
+                {% if (login == 'Failed'): %}
+                <div class="alert alert-danger">
+                    <p><strong>Warning!</strong>username and/or password incorrect</p>
+                </div>
+                {% endif %}
+            </form>
+        </div>
+    </body>
+</html>
