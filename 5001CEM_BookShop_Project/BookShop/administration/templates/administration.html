@@ -5,13 +5,12 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <script src="https://kit.fontawesome.com/629ae5694a.js" crossorigin="anonymous"></script>
-		{% assets "indexScript_style_bundle" %}
-        <link 
-         rel="stylesheet" 
-         href="{{ ASSET_URL }}"
-         type="text/css"
-        />
-        {% endassets %}
+		<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/theme.css')}}">
+        <script>
+            function editInformation(){
+                document.getElementById('quantity').readonly = false;
+            }
+        </script>
 	</head>
 	<body>
 		<div class="jumbotron">
@@ -21,92 +20,77 @@
 		<nav>
 			<ul class="nav nav-fill">
 				<li class="nav-item">
-					<a class="nav-link" href="#"><span class="fa fa-home"></span> Home</a>
+					<a class="nav-link" href="/admin_dashboard"><span class="fa fa-home"></span> Dashboard</a>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#">About</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="/books">Books</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#">Contact us</a>
-				</li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" data-toggle="modal" data-target="#basket"><span class="fas fa-shopping-basket" style="font-size:20px"></span>{{session['total_quantity']}} Basket</a>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/logout"><span class="fa fa-sign-out"></span>Sign out</a>
                 </li>
 			</ul>
 		</nav>
-        <br>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-4">
-                    
-                </div>
-                <div class="col-8">
-                        <div class="row">
-                            <div class="col">
-                                ISBN
-                            </div>
-                            <div class="col">
-                                Title
-                            </div>
-                            <div class="col">
-                                Genre
-                            </div>
-                            <div class="col">
-                                publication date
-                            </div>
-                            <div class="col">
-                                book type
-                            </div>
-                            <div class="col">
-                                trade price
-                            </div>
-                            <div class="col">
-                                retail price
-                            </div>
-                            <div class="col">
-                                quantity                        
-                            </div>
-                        </div>                                     
-                    {% for items in Products %}
-                        <div class="row">                              
-                            <div class="col">
-                                items[0]
-                            </div>
-                            <div class="col">
-                                items[3]
-                            </div>
-                            <div class="col">
-                                items[5]
-                            </div>
-                            <div class="col">
-                                items[2]
-                            </div>
-                            <div class="col">
-                                items[6]
-                            </div>
-                            <div class="col">
-                                items[7]
-                            </div>
-                            <div class="col">
-                                items[8]
-                            </div>
-                            <div class="col">
-                                items[9]                        
-                            </div>
-                            <div class="col">
-                                <a href="url_for('delete_record',items[0])" class="btnActionRemove">
-                                    &times;
-                                </a>
-                            </div>
+        <div class="row">
+            <div class="col-12">
+                    <div class="row">
+                        <div class="col-2">
+                            
                         </div>
-                    {% endfor %}
+                        <div class="col-2">
+                            ISBN
+                        </div>
+                        <div class="col-2">
+                            Title
+                        </div>                            
+                        <div class="col-2">
+                            publication date
+                        </div>
+                        <div class="col-1">
+                            book type
+                        </div>
+                        <div class="col-1">
+                            trade price
+                        </div>
+                        <div class="col-1">
+                            retail price
+                        </div>
+                        <div class="col-1">
+                            quantity                        
+                        </div>
+                    </div>                                           
+                {% for items in Products %}    
+                <form method="POST" action="">
+                <div class="row"> 
+                    <div class="col-2">
+                        <button type="button" class="btn btn-secondary" onclick="editInformation()">
+                            Edit
+                        </button>
+                        <button type="button" class="btn btn-danger" onclick="{{url_for('delete_record')}}">
+                            Delete <span class="fa fa-window-close"></span>
+                        </button>
+                    </div>
+                    <div class="col-2">
+                        <input type="text" value="{{items[0]}}" readonly>
+                    </div>
+                    <div class="col-2">
+                        <input type="text" value="{{items[3]}}" readonly>
+                    </div>                         
+                    <div class="col-2">
+                        <input type="text" value="{{items[2]}}" readonly>
+                    </div>
+                    <div class="col-1">
+                        <input type="text" value="{{items[6]}}" readonly>
+                    </div>
+                    <div class="col-1">
+                        <input type="text" value="{{items[7]}}" readonly>
+                    </div>
+                    <div class="col-1">
+                        <input type="text" value="{{items[8]}}" readonly>
+                    </div>
+                    <div class="col-1">
+                        <input type="text" class="quantity" value="{{items[9]}}" readonly>
+                    </div>                            
                 </div>
+                </form>
+                    <br>
+                {% endfor %}
             </div>
         </div>
     </body>
