@@ -14,18 +14,21 @@ from flask import current_app as app
 from markupsafe import escape
 import sqlite3, os, re
 #Authorisation imports
+from flask_login import current_user, logout_user, login_required
 
 loginCredentials = Blueprint('loginCredentials',__name__,
                              template_folder="templates",
                              static_folder="static")
-
 regularExpression = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
 
 #Login action
 #------------------------------------------------------------------------------------------------------------------------------------
+
+#Authentication process to index
 @loginCredentials.route('/authenticated', methods=['GET'])
 def loadMainPage():
     return redirect('/index')
+
 #Login url extension
 @loginCredentials.route('/', methods=['GET','POST'])
 #Login data request from HTML form
@@ -38,9 +41,8 @@ def login():
         loginStatus = ''
         #Securing email and password 
         if(login_user(username,password)):
-            print("Yo bro")
-            print(request.method)
-            #Requesting new user session be generated
+            session['key'] = username
+            #Redirection --Security flaw--
             return redirect('/authenticated')
         else: 
             #Login failed response 
@@ -57,6 +59,8 @@ def login_user(username,password):
     #Boolean return if record found
     if(databaseAccess(username,password) > 0):
         return True
+        databaseConnection.close()
+        cursor.close()
     else:
         return False
     

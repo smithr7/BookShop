@@ -91,10 +91,8 @@ def product_addition_to_cart():
 @indexScript.route('/index')
 def loadHomeScreen():
     try:
-        path = './Database/bookProducts.db'
-        con = sqlite3.connect(path)
-        cur = con.cursor();
-        print(cur)
+        con = sqlite3.connect('./Database/bookProducts.db')
+        cursor = con.cursor();
         cur.execute("SELECT * FROM products")
         rows = cur.fetchall()
         return render_template('index.html',products=rows)
