@@ -32,7 +32,7 @@ def create_app():
         app.register_blueprint(loginCredentials,url_prefix="/")
         app.register_blueprint(registerCredentials,url_prefix="/register")
         app.register_blueprint(indexScript)
-        app.register_blueprint(administration,url_prefix='/dashboard')
+        app.register_blueprint(administration,url_prefix='/admin_dashboard')
         app.register_blueprint(checkout)
         app.register_blueprint(bookInformation)
         app.register_blueprint(booksCatalog)

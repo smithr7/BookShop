@@ -8,10 +8,10 @@ The core components of this git-hub include the BookShoppages, python FLASK scri
 
 ### FLASK Components repository path:
 
-- 5001CEM_BookShop_Project/BookShop/CalculateStockLevels.py
+- 5001CEM_BookShop_Project/BookShop/administration.py
 Administrative control for issuing re-stocking of books and changing of quantities. It also includes the ability to remove and add products
 
-- 5001CEM_BookShop_Project/BookShop/CreditCardProcess.py
+- 5001CEM_BookShop_Project/BookShop/checkout.py
 User credit card payment system which captures the data and immediately deletes it upon receiving the data.
 
 - 5001CEM_BookShop_Project/BookShop/LoginCredentials.py
@@ -26,7 +26,13 @@ Template with all books including search parameters for the user to select books
 - 5001CEM_BookShop_Project/BookShop/indexScript.py
 Main home page of the book shop website. All other operations/functionality are achievable through the main BookShoppage. It also includes static BookShoppages such as about us.
 
-### BookShopsite Components repository path:
+- 5001CEM_BookShop_Project/BookShop/__init__.py
+Instance generation for entire application which binds all the assets and configuration files
+
+- 5001CEM_BookShop_Project/BookShop/config.py
+Configuration file for variables used across the application
+
+### Website Components repository path:
 
 - 5001CEM_BookShop_Project/BookShop/booksCatalog/templates/bookCatalog.html
 Template for all books within the database including filters to enable a user to browse. Search functionality has not been added in yet as it has yet to be constructed on the back-end.
@@ -69,9 +75,8 @@ Codio server box: https://metal-bagel-5000.codio-box.uk
 
 ## BookShopsite layout
 
-Book Shop BookShopsite is a interconnection of back-end and front-end components. The front-end BookShoppages have been constructed with interconnections. Please find the front-end BookShoppages and their connections in this tiered hierarchy:
+Upon running the script the following are links to different areas of the Book Shop. Please note that the codio box url is used as an example.
 
-![image](https://user-images.githubusercontent.com/23194490/142739467-f415ef49-e5c6-4920-8169-7c5aea35c324.png)
-
-
-Indentation in this situation demonstrates child elements of a parent element be them BookShoppages or modals (functions of the BookShoppages). Siblings have the same bullet point symbols so as to distinguish them across the structure. Note that the Login Page and Register have been listed as siblings. The registration page will inherit all tiered structure as the login page. They have been seperated to prevent duplicating the tree.
+Administration page: `https://metal-bagel-5000.codio-box.uk/admin_dashboard`
+Main login: `https://metal-bagel-5000.codio-box.uk/`
+Register URL: `https://metal-bagel-5000.codio-box.uk/register`
