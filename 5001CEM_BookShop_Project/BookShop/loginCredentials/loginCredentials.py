@@ -64,7 +64,7 @@ def login_user(username,password):
         return True
     else:
         return False
-    
+
 #Accessing database
 def databaseAccess(username,password):
     print("Current directory: {0}".format(os.getcwd()))
@@ -72,5 +72,11 @@ def databaseAccess(username,password):
     cursor = databaseConnection.cursor();
     cursor.execute('SELECT count(*) FROM userCredentials WHERE email_address =? AND password =?',(username,password))
     return int(cursor.fetchone()[0])
+
+@loginCredentials.route('/logout', methods=['GET','POST'])
+def logoutUser():
+    return redirect("/")
+
+
 
     
