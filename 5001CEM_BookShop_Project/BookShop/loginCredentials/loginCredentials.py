@@ -62,11 +62,8 @@ def login_user(username,password):
     #Boolean return if record found
     if(databaseAccess(username,password) > 0):
         return True
-        sqlite3.connect
-        cursor.close()
     else:
         return False
-    databaseConnection.close()
     
 #Accessing database
 def databaseAccess(username,password):

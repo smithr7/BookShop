@@ -17,7 +17,7 @@ regularExpression = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
 #----------------------------------------------------------------------------------------------------------------------------------------
 
 #Registering data request from HTML form
-@registerCredentials.route('/register', methods=['GET','POST'])
+@registerCredentials.route('/', methods=['GET','POST'])
 def register():
     if request.method == 'POST':
         #email address validation check
@@ -52,5 +52,6 @@ def registration_process(email,password,fname,sname,oname,dob):
     databaseConnection.commit
     #Close database connection
     databaseConnection.close()
+    session['key'] = email
     #Display blank registration form as success
-    return display_registration_form()
+    return redirect('/index')
