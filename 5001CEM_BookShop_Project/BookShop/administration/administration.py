@@ -17,19 +17,23 @@ def adminDashboard():
     rows = cursor.fetchall()
     return render_template("administration.html",Products=rows)
 
-@app.route('/delete_record', methods=['POST','GET'])
+#Deleting record from current database
+@app.route('/delete_record/<string:ISBN>', methods=['POST','GET'])
 def delete_record(ISBN):
-    dbConnection = sqlite.connect('./Database/bookProducts.db')
+    dbConnection = sqlite3.connect('../Database/bookProducts.db')
     cursor = dbConnection.cursor()
     cursor.execute("DELETE FROM products WHERE ISBN13=?",(ISBN,))
+    dbConnection.commit()
+    cursor.close()
+    dbConnection.close()
+    return redirect('/admin_dashboard')
 
-@app.route('/edit_item/<string:ISBN>', methods=['POST','GET'])
-def edit(ISBN):
-    dbConnection = sqlite.connect('./Database/bookProducts.db')
-    cursor = dbConnection.cursor()
-    newQuantity = request.form['quantity']
-    cursor.execute("UPDATE products SET quantity =? WHERE ISBN13 =?",(newQuantity,ISBN))
-    return render_template("administration.html")
+# @app.route('/add_new_book/', methods=['GET','POST'])
+# def addNewBook():
+#     if request.method == 'POST':
+        
+#     return redirect('/admin_dashboard')
+
 # <!--{% assets "indexScript_style_bundle" %}
 #         <link 
 #          rel="stylesheet" 
