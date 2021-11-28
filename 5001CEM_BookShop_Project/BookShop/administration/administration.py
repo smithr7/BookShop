@@ -7,20 +7,24 @@ from flask import current_app as app
 from markupsafe import escape
 import sqlite3, os, re
 
-app = Flask(__name__,template_folder="templates",static_folder="static")
+#Administration blueprint extension script
+administration = Blueprint('administration',__name__,
+                          template_folder="templates",
+                          static_folder="static")
 
-@app.route('/admin_dashboard', methods=['GET','POST'])
+#Base administration URL
+@administration.route('/', methods=['GET','POST'])
 def adminDashboard():
-    dbConnection = sqlite3.connect('../Database/bookProducts.db')
+    dbConnection = sqlite3.connect('./Database/bookProducts.db')
     cursor = dbConnection.cursor()
     cursor.execute("SELECT * FROM products")
     rows = cursor.fetchall()
     return render_template("administration.html",Products=rows)
 
 #Deleting record from current database
-@app.route('/delete_record/<string:ISBN>', methods=['POST','GET'])
+@administration.route('/delete_record/<string:ISBN>', methods=['POST','GET'])
 def delete_record(ISBN):
-    dbConnection = sqlite3.connect('../Database/bookProducts.db')
+    dbConnection = sqlite3.connect('./Database/bookProducts.db')
     cursor = dbConnection.cursor()
     cursor.execute("DELETE FROM products WHERE ISBN13=?",(ISBN,))
     dbConnection.commit()
@@ -28,19 +32,27 @@ def delete_record(ISBN):
     dbConnection.close()
     return redirect('/admin_dashboard')
 
-# @app.route('/add_new_book/', methods=['GET','POST'])
-# def addNewBook():
-#     if request.method == 'POST':
+#Add new record to current database
+@administration.route('/add_new_book', methods=['GET','POST'])
+def addNewBook():
+     if request.method == 'POST':
+        dbConnection = sqlite3.connect('./Database/bookProducts.db')
+        cursor = dbConnection.cursor()
         
-#     return redirect('/admin_dashboard')
+        bookAttr = ['ISBN13','Title','Author','genre','pubDate','type','tradePrice','retailPrice','quantity']
+        bookFormInfo = []
+            
+        for index in bookAttr:
+            bookFormInfo.append(request.form[index])
+        
+        cursor.execute("INSERT INTO products (ISBN13,book_description,author_name,genre,publication_date,book_type,trade_price,retail_price,book_quantity) VALUES (?,?,?,?,?,?,?,?,?)",(bookFormInfo[0],bookFormInfo[1],bookFormInfo[2],bookFormInfo[3],bookFormInfo[4],bookFormInfo[5],bookFormInfo[6],bookFormInfo[7],bookFormInfo[8]))
+        
+        dbConnection.commit()
+        
+        cursor.close()
+        dbConnection.close()
+        return redirect('/admin_dashboard')
 
-# <!--{% assets "indexScript_style_bundle" %}
-#         <link 
-#          rel="stylesheet" 
-#          href="{{ ASSET_URL }}"
-#          type="text/css"
-#         />
-#         {% endassets %}-->
     
     
     

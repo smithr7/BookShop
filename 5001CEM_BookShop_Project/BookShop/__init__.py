@@ -19,10 +19,10 @@ def create_app():
 
     #Fetching Flask Blueprint templates to load into instance
     with app.app_context():
+        from .administration.administration import administration
         from .loginCredentials.loginCredentials import loginCredentials
         from .registerCredentials.registerCredentials import registerCredentials
-        from .administration.administration import administration
-        #from .checkout.checkout import checkout
+        from .checkout.checkout import checkout
         from .indexScript.indexScript import indexScript
         from .bookInformation.bookInformation import bookInformation
         from .booksCatalog.booksCatalog import booksCatalog
@@ -32,8 +32,8 @@ def create_app():
         app.register_blueprint(loginCredentials,url_prefix="/")
         app.register_blueprint(registerCredentials,url_prefix="/register")
         app.register_blueprint(indexScript)
-        app.register_blueprint(administration)
-        #app.register_blueprint(checkout)
+        app.register_blueprint(administration,url_prefix='/dashboard')
+        app.register_blueprint(checkout)
         app.register_blueprint(bookInformation)
         app.register_blueprint(booksCatalog)
 

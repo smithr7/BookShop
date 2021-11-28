@@ -5,7 +5,13 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <script src="https://kit.fontawesome.com/629ae5694a.js" crossorigin="anonymous"></script>
-		<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/theme.css')}}">
+		 {% assets "indexScript_style_bundle" %}
+         <link 
+          rel="stylesheet" 
+          href="{{ ASSET_URL }}"
+          type="text/css"
+         />
+         {% endassets %}-->
 	</head>
 	<body>
 		<div class="jumbotron">
@@ -33,12 +39,82 @@
                     </div>
                     <div class="modal-body">
                         <div class="container">
-                            <div class="col-4">
-                                
-                            </div>
-                            <div class="col-4">
-                                
-                            </div>
+                            <form method="POST" action="{{url_for('.addNewBook')}}">
+                                <div class="form-group row">
+                                    <label for="ISBN13" class="col-2 offset-3">Book ISBN-13:</label>
+                                    <div class="col-4">
+                                        <input id="ISBN13" name="ISBN13" type="text" class="form-control" placeholder="XXXXXXXXXXXX">    
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="Title" class="col-2 offset-3">Book title:</label>
+                                    <div class="col-4">
+                                        <input id="Title" name="Title" type="text" class="form-control" placeholder="Example">    
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="Author" class="col-2 offset-3">Book Author:</label>
+                                    <div class="col-4">
+                                        <input id="Author" name="Author" type="text" class="form-control" placeholder="John Smith">    
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="type" class="col-2 offset-3">Book genre:</label>
+                                    <div class="col-4">
+                                        <select id="genre" name="genre" class="form-control">
+                                            <option>Action</option>
+                                            <option>Adventure</option>
+                                            <option>Biography</option>
+                                            <option>Comedy</option>
+                                            <option>Fantasy</option>
+                                            <option>Horror</option>
+                                            <option>Mystery</option>
+                                            <option>Drama</option>
+                                            <option>Science Fiction</option>
+                                            <option>Science Fantasy</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="pubDate" class="col-2 offset-3">Publication Date:</label>
+                                    <div class="col-4">
+                                        <input id="pubDate" name="pubDate" type="date" class="form-control" placeholder="">    
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="type" class="col-2 offset-3">Book type:</label>
+                                    <div class="col-4">
+                                        <select id="type" name="type" class="form-control">
+                                            <option>Softback</option>
+                                            <option>Hardback</option>
+                                            <option>Spiral-Bound</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="tradePrice" class="col-2 offset-3">Trade price:</label>
+                                    <div class="col-4">
+                                        <input id="tradePrice" name="tradePrice" type="text" class="form-control" placeholder="">    
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="retailPrice" class="col-2 offset-3">Retail price:</label>
+                                    <div class="col-4">
+                                        <input id="retailPrice" name="retailPrice" type="text" class="form-control" placeholder="">    
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="quantity" class="col-2 offset-3">Quantity:</label>
+                                    <div class="col-4">
+                                        <input id="quantity" name="quantity" type="text" class="form-control" placeholder="">    
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-2 offset-3">
+                                        <input type="submit" class="btn btn-secondary" value="Add book">
+                                    </div>    
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
